@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEERA | My Projects</title>
+  <link rel="stylesheet" href="projects.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="projects-body">
+
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= 1. SIDEBAR (PC) ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="crown-emblem"><i class="fa-solid fa-crown"></i></div>
+        <div>
+          <h2 class="brand-name">VEERA</h2>
+          <span class="brand-sub">Master Your Life</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item active"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="upgrade-box">
+        <div class="upgrade-header">
+          <div class="crown-icon-sm"><i class="fa-solid fa-crown"></i></div>
+          <div><h5>Upgrade to Pro</h5><p>Unlock amazing features</p></div>
+        </div>
+        <button class="btn-upgrade">Upgrade Now</button>
+      </div>
+
+      <div class="sidebar-user-card" id="sidebarUserCard">
+        <div class="user-avatar-mini">
+          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" 
+               alt="Veera Avatar" 
+               onerror="this.onerror=null; this.src='images/veera.png';" />
+        </div>
+        <div class="user-mini-info">
+          <h4>K Praveen Kumar</h4>
+          <p>Veera K</p>
+        </div>
+        <i class="fa-solid fa-chevron-down down-arrow"></i>
+      </div>
+    </aside>
+
+    <!-- ================= 2. MAIN CONTENT ================= -->
+    <main class="main-content">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+          <div class="page-title-box">
+            <h1>My Projects 🚀</h1>
+            <p>Things I've built with passion and code.</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="projectSearchInput" placeholder="Search projects..." />
+          </div>
+
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+
+          <div class="icon-bubble has-badge" data-badge="3"><i class="fa-regular fa-bell"></i></div>
+          <div class="icon-bubble has-badge" data-badge="5"><i class="fa-regular fa-envelope"></i></div>
+          <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
+            <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" 
+                 alt="Veera Avatar" 
+                 onerror="this.onerror=null; this.src='images/veera.png';" />
+          </div>
+        </div>
+      </header>
+
+      <!-- 4 Metric Stats Cards -->
+      <section class="projects-stats-grid">
+        <div class="p-stat-card purple">
+          <div class="p-stat-icon"><i class="fa-solid fa-folder"></i></div>
+          <div class="p-stat-info">
+            <span class="p-stat-lbl">Total Projects</span>
+            <h3>6</h3>
+            <span class="trend pos">+100% this month</span>
+          </div>
+          <svg class="p-wave" viewBox="0 0 100 25"><path d="M0,15 Q25,5 50,15 T100,8" fill="none" stroke="#8b5cf6" stroke-width="2.5"/></svg>
+        </div>
+
+        <div class="p-stat-card pink">
+          <div class="p-stat-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="p-stat-info">
+            <span class="p-stat-lbl">Completed</span>
+            <h3>4</h3>
+            <span class="trend pos">+66% this month</span>
+          </div>
+          <svg class="p-wave" viewBox="0 0 100 25"><path d="M0,18 Q25,8 50,18 T100,5" fill="none" stroke="#ec4899" stroke-width="2.5"/></svg>
+        </div>
+
+        <div class="p-stat-card blue">
+          <div class="p-stat-icon"><i class="fa-regular fa-circle-dot"></i></div>
+          <div class="p-stat-info">
+            <span class="p-stat-lbl">In Progress</span>
+            <h3>1</h3>
+            <span class="trend pos">+25% this month</span>
+          </div>
+          <svg class="p-wave" viewBox="0 0 100 25"><path d="M0,14 Q25,20 50,10 T100,12" fill="none" stroke="#0ea5e9" stroke-width="2.5"/></svg>
+        </div>
+
+        <div class="p-stat-card orange">
+          <div class="p-stat-icon"><i class="fa-solid fa-asterisk"></i></div>
+          <div class="p-stat-info">
+            <span class="p-stat-lbl">Technologies</span>
+            <h3>18+</h3>
+            <span class="trend gray">Explore stack</span>
+          </div>
+          <svg class="p-wave" viewBox="0 0 100 25"><path d="M0,16 Q25,6 50,14 T100,6" fill="none" stroke="#f59e0b" stroke-width="2.5"/></svg>
+        </div>
+      </section>
+
+      <!-- Filter Controls Strip -->
+      <section class="controls-bar">
+        <div class="filter-pills">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn" data-filter="in-progress">In Progress</button>
+          <button class="filter-btn" data-filter="featured">Featured</button>
+        </div>
+
+        <div class="sort-view-controls">
+          <div class="sort-dropdown">
+            <span>Sort by:</span>
+            <strong>Recently Updated <i class="fa-solid fa-chevron-down"></i></strong>
+          </div>
+          <div class="view-toggles">
+            <button class="view-btn active" title="Grid View"><i class="fa-solid fa-table-cells-large"></i></button>
+            <button class="view-btn" title="List View"><i class="fa-solid fa-list-ul"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 Project Showcase Grid -->
+      <section class="project-cards-grid" id="projectCardsGrid">
+
+        <!-- 1. Signal Jammer -->
+        <div class="project-box" data-category="completed featured">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project1.png" below for your custom photo -->
+            <img src="images/project1.png" 
+                 alt="Signal Jammer" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status completed">Completed</span>
+          </div>
+          <div class="project-box-body">
+            <h3>1. Signal Jammer</h3>
+            <p>High power multi-band signal jammer for WiFi, GPS, Bluetooth & Mobile signals.</p>
+            <div class="tag-chips">
+              <span class="chip blue">Arduino</span>
+              <span class="chip purple">RF Module</span>
+              <span class="chip cyan">ESP32</span>
+              <span class="chip indigo">IoT</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 2 weeks ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. RC Car with Mobile & Hand Control -->
+        <div class="project-box" data-category="completed featured">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project2.png" below for your custom photo -->
+            <img src="images/project2.png" 
+                 alt="RC Car" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status completed">Completed</span>
+          </div>
+          <div class="project-box-body">
+            <h3>2. RC Car with Mobile & Hand Control</h3>
+            <p>Bluetooth controlled RC car with mobile app and hand gesture (flex sensor) control.</p>
+            <div class="tag-chips">
+              <span class="chip blue">Arduino</span>
+              <span class="chip purple">Bluetooth</span>
+              <span class="chip cyan">MIT App Inventor</span>
+              <span class="chip indigo">IoT</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 3 weeks ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Personal Website Design -->
+        <div class="project-box" data-category="completed">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project3.png" below for your custom photo -->
+            <img src="images/project3.png" 
+                 alt="Personal Website Design" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status completed">Completed</span>
+          </div>
+          <div class="project-box-body">
+            <h3>3. Personal Website Design</h3>
+            <p>Modern responsive personal portfolio website built using HTML, CSS, JavaScript.</p>
+            <div class="tag-chips">
+              <span class="chip blue">HTML</span>
+              <span class="chip purple">CSS</span>
+              <span class="chip cyan">JavaScript</span>
+              <span class="chip indigo">Bootstrap</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 1 month ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. College Attendance App -->
+        <div class="project-box" data-category="completed">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project4.png" below for your custom photo -->
+            <img src="images/project4.png" 
+                 alt="College Attendance App" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status completed">Completed</span>
+          </div>
+          <div class="project-box-body">
+            <h3>4. College Attendance App</h3>
+            <p>Web based attendance management system for colleges with reports and analytics.</p>
+            <div class="tag-chips">
+              <span class="chip blue">React</span>
+              <span class="chip purple">Firebase</span>
+              <span class="chip cyan">Tailwind CSS</span>
+              <span class="chip indigo">Chart.js</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 3 weeks ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. 100+ Basic IoT Projects -->
+        <div class="project-box" data-category="completed">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project5.png" below for your custom photo -->
+            <img src="images/project5.png" 
+                 alt="100+ Basic IoT Projects" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status completed">Completed</span>
+          </div>
+          <div class="project-box-body">
+            <h3>5. 100+ Basic IoT Projects</h3>
+            <p>Collection of 100+ basic IoT projects using Arduino, ESP8266, ESP32 & sensors.</p>
+            <div class="tag-chips">
+              <span class="chip blue">Arduino</span>
+              <span class="chip purple">ESP8266</span>
+              <span class="chip cyan">ESP32</span>
+              <span class="chip indigo">Sensors</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 1 month ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Advanced Smart Health Monitoring -->
+        <div class="project-box" data-category="in-progress featured">
+          <div class="project-thumb-wrap">
+            <!-- Change image src="images/project6.png" below for your custom photo -->
+            <img src="images/project6.png" 
+                 alt="Smart Health Monitoring" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80';" />
+            <span class="badge-status in-progress">In Progress</span>
+          </div>
+          <div class="project-box-body">
+            <h3>6. Advanced Smart Health Monitoring</h3>
+            <p>Real-time health monitoring system with heart rate, SpO2, temperature & alerts.</p>
+            <div class="tag-chips">
+              <span class="chip blue">ESP32</span>
+              <span class="chip purple">MAX30102</span>
+              <span class="chip cyan">DHT11</span>
+              <span class="chip indigo">IoT</span>
+            </div>
+            <div class="project-box-footer">
+              <span><i class="fa-regular fa-calendar"></i> Updated 4 days ago</span>
+              <a href="#" class="open-link-btn" title="View Project"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ================= 3. MOBILE BOTTOM NAVIGATION ================= -->
+    <nav class="mobile-bottom-nav">
+      <a href="veeradashboard.html" class="b-nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="projects.html" class="b-nav-item active"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+      <a href="skills.html" class="b-nav-item"><i class="fa-regular fa-calendar-check"></i><span>Tasks</span></a>
+      <a href="profile.html" class="b-nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+      <a href="#" class="b-nav-item" id="mobileLogoutBtn"><i class="fa-solid fa-border-all"></i><span>Logout</span></a>
+    </nav>
+
+  </div>
+
+  <script src="projects.js"></script>
+</body>
+</html>

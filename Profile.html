@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEERA | My Profile</title>
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="profile-body">
+
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= 1. SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="crown-emblem"><i class="fa-solid fa-crown"></i></div>
+        <div><h2 class="brand-name">VEERA</h2><span class="brand-sub">Master Your Life</span></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item active"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-user-card" id="sidebarUserCard">
+        <div class="user-avatar-mini">
+          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+        </div>
+        <div class="user-mini-info"><h4>K Praveen Kumar</h4><p>Veera K</p></div>
+      </div>
+    </aside>
+
+    <!-- ================= 2. MAIN PROFILE CONTENT ================= -->
+    <main class="main-content">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+          <div class="page-title-box">
+            <h1>My Profile</h1>
+            <p>Manage your professional portfolio and journey</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+          <div class="avatar-header" id="logoutTrigger" title="Logout">
+            <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Banner -->
+      <section class="profile-hero-card">
+        <div class="hero-left">
+          <div class="avatar-large-wrap">
+            <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+            <span class="online-indicator"></span>
+          </div>
+
+          <div class="hero-details">
+            <div class="name-badge-row">
+              <h2>K Praveen Kumar</h2>
+              <i class="fa-solid fa-circle-check verified-icon"></i>
+            </div>
+            <div class="pill-title">Veera K</div>
+            
+            <div class="hero-subtext">
+              <span><i class="fa-solid fa-location-dot"></i> Tirupati, Andhra Pradesh, India</span>
+              <span><i class="fa-regular fa-envelope"></i> <span id="heroEmailDisplay">kpraveenkumar@example.com</span></span>
+            </div>
+
+            <div class="social-icons-row">
+              <a href="https://github.com/kpraveen17k" target="_blank" class="s-icon"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/k-praveen-kumar-17k/?isSelfProfile=false" target="_blank" class="s-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://x.com/14317Kpraveen" target="_blank" class="s-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="https://wa.me/919381414582" target="_blank" class="s-icon whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <button class="btn-edit-profile" id="editProfileBtn"><i class="fa-solid fa-pen"></i> <span>Edit Profile</span></button>
+          <div class="hero-stats">
+            <div class="h-stat-item"><h3>24</h3><span>Projects</span></div>
+            <div class="h-stat-item"><h3>1.2K</h3><span>Followers</span></div>
+            <div class="h-stat-item"><h3>487</h3><span>Following</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sub Navigation Tabs -->
+      <nav class="profile-tabs-strip">
+        <button class="p-tab active" data-tab="overview"><i class="fa-regular fa-user"></i> <span>Overview</span></button>
+        <button class="p-tab" data-tab="personal"><i class="fa-solid fa-id-card"></i> <span>Personal Info</span></button>
+        <button class="p-tab" data-tab="skills"><i class="fa-solid fa-code"></i> <span>Skills</span></button>
+        <button class="p-tab" data-tab="experience"><i class="fa-solid fa-briefcase"></i> <span>Experience</span></button>
+        <button class="p-tab" data-tab="education"><i class="fa-solid fa-graduation-cap"></i> <span>Education</span></button>
+        <button class="p-tab" data-tab="certificates"><i class="fa-solid fa-certificate"></i> <span>Certificates</span></button>
+        <button class="p-tab" data-tab="achievements"><i class="fa-solid fa-award"></i> <span>Achievements</span></button>
+      </nav>
+
+      <!-- Dynamic Tab Views -->
+      <div class="tab-views-container">
+
+        <!-- 1. OVERVIEW TAB -->
+        <div class="tab-pane active" id="tab-overview">
+          <div class="profile-main-grid">
+            <div class="content-card">
+              <div class="card-head-simple"><span class="icon-wrap-pink"><i class="fa-solid fa-user"></i></span><h3>About Me</h3></div>
+              <p class="about-desc">Passionate Web Developer with experience building modern web applications. I love turning ideas into reality using code and creating beautiful user experiences.</p>
+              <button class="btn-download-cv"><span>Download CV</span> <i class="fa-solid fa-download"></i></button>
+            </div>
+
+            <div class="content-card">
+              <div class="card-head-simple"><span class="icon-wrap-pink"><i class="fa-regular fa-id-badge"></i></span><h3>Personal Information</h3></div>
+              <div class="info-table">
+                <div class="info-row"><span class="info-lbl">Full Name</span><span class="info-val">K Praveen Kumar</span></div>
+                <div class="info-row"><span class="info-lbl">Date of Birth</span><span class="info-val">17/02/2007</span></div>
+                <div class="info-row"><span class="info-lbl">Phone</span><span class="info-val">+91 9381414582</span></div>
+                <div class="info-row"><span class="info-lbl">Address</span><span class="info-val">Tirupati, Andhra Pradesh</span></div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-head-simple"><span class="icon-wrap-blue"><i class="fa-solid fa-chart-simple"></i></span><h3>Stats Overview</h3></div>
+              <div class="stats-2x2-grid">
+                <div class="sub-stat-box"><div class="s-box-icon purple"><i class="fa-solid fa-folder"></i></div><h3>24</h3><p>Total Projects</p></div>
+                <div class="sub-stat-box"><div class="s-box-icon blue"><i class="fa-regular fa-eye"></i></div><h3>1.2K</h3><p>Profile Views</p></div>
+                <div class="sub-stat-box"><div class="s-box-icon red"><i class="fa-solid fa-certificate"></i></div><h3>12</h3><p>Certificates</p></div>
+                <div class="sub-stat-box"><div class="s-box-icon orange"><i class="fa-solid fa-trophy"></i></div><h3>5</h3><p>Achievements</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PERSONAL INFO TAB -->
+        <div class="tab-pane" id="tab-personal">
+          <div class="content-card">
+            <div class="card-head-simple"><span class="icon-wrap-pink"><i class="fa-regular fa-id-badge"></i></span><h3>Personal Background & Details</h3></div>
+            <div class="info-table">
+              <div class="info-row"><span class="info-lbl"><i class="fa-regular fa-user"></i> Full Legal Name</span><span class="info-val">K Praveen Kumar</span></div>
+              <div class="info-row"><span class="info-lbl"><i class="fa-solid fa-signature"></i> Known Brand Title</span><span class="info-val">Veera K</span></div>
+              <div class="info-row"><span class="info-lbl"><i class="fa-regular fa-calendar"></i> Date of Birth</span><span class="info-val">17 February 2007</span></div>
+              <div class="info-row"><span class="info-lbl"><i class="fa-solid fa-phone"></i> Mobile Phone</span><span class="info-val">+91 9381414582</span></div>
+              <div class="info-row"><span class="info-lbl"><i class="fa-brands fa-whatsapp"></i> WhatsApp Number</span><span class="info-val link-val"><a href="https://wa.me/919381414582" target="_blank" style="color: inherit; text-decoration: none;">+91 9381414582</a></span></div>
+              <div class="info-row"><span class="info-lbl"><i class="fa-solid fa-location-dot"></i> Hometown & State</span><span class="info-val">Tirupati, Andhra Pradesh, India</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. SKILLS TAB (VISUAL SUMMARY WITH IMAGES) -->
+        <div class="tab-pane" id="tab-skills">
+          <div class="showcase-grid">
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Frontend Engineering" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag purple">Frontend Specialist</span>
+              </div>
+              <div class="showcase-body">
+                <h3>Frontend Development & Architecture</h3>
+                <p>Building responsive, pixel-perfect user interfaces with HTML5, CSS3, ES6 JavaScript, and component-based React framework.</p>
+                <div class="tech-pills">
+                  <span>HTML5 (95%)</span>
+                  <span>CSS3 / Flex / Grid (95%)</span>
+                  <span>JavaScript (90%)</span>
+                  <span>React.js (85%)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="Backend & Cloud" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag blue">Cloud & Backend</span>
+              </div>
+              <div class="showcase-body">
+                <h3>Backend, Authentication & Cloud DB</h3>
+                <p>Developing secure real-time web solutions, database query structures with Google Firestore, and Node.js REST API endpoints.</p>
+                <div class="tech-pills">
+                  <span>Google Firebase (88%)</span>
+                  <span>Cloud Firestore (88%)</span>
+                  <span>Node.js APIs (80%)</span>
+                  <span>REST Integration (85%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. EXPERIENCE TAB (VISUAL SUMMARY WITH IMAGES) -->
+        <div class="tab-pane" id="tab-experience">
+          <div class="showcase-grid">
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Web Developer" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag green">2024 - Present</span>
+              </div>
+              <div class="showcase-body">
+                <div class="role-meta">
+                  <h3>Lead Frontend & Portal Developer</h3>
+                  <span class="company-badge">VEERA Space Portfolio</span>
+                </div>
+                <p>Architected full-stack authentication, responsive life organizer dashboard, session security mechanisms, and dynamic custom UI experiences.</p>
+                <div class="role-highlights">
+                  <div class="hl-item"><i class="fa-solid fa-check"></i> Designed high-speed single page transitions & session security.</div>
+                  <div class="hl-item"><i class="fa-solid fa-check"></i> Connected Firestore cloud databases for real-time authentication match.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. EDUCATION TAB (VISUAL SUMMARY WITH IMAGES) -->
+        <div class="tab-pane" id="tab-education">
+          <div class="showcase-grid">
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="Education" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag orange">Academic Journey</span>
+              </div>
+              <div class="showcase-body">
+                <div class="role-meta">
+                  <h3>Computer Science & Web Engineering</h3>
+                  <span class="company-badge">Tirupati, Andhra Pradesh, India</span>
+                </div>
+                <p>Focused on algorithmic reasoning, data management, web application development, and modern internet architecture standards.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. CERTIFICATES TAB (VISUAL SUMMARY WITH IMAGES) -->
+        <div class="tab-pane" id="tab-certificates">
+          <div class="showcase-grid">
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Full Stack Certification" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag pink">Verified Credential</span>
+              </div>
+              <div class="showcase-body">
+                <div class="role-meta">
+                  <h3>Advanced Frontend & React Architecture</h3>
+                  <span class="company-badge">10 Apr 2025</span>
+                </div>
+                <p>Certified in advanced React state lifecycles, CSS grid systems, modern ES6+ paradigms, and clean architectural design patterns.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. ACHIEVEMENTS TAB (VISUAL SUMMARY WITH IMAGES) -->
+        <div class="tab-pane" id="tab-achievements">
+          <div class="showcase-grid">
+            <div class="showcase-card">
+              <div class="showcase-banner">
+                <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=600&q=80" alt="Achievements" onerror="this.src='images/veera.png';" />
+                <span class="showcase-tag purple">Milestone</span>
+              </div>
+              <div class="showcase-body">
+                <div class="role-meta">
+                  <h3>Problem Solver & Project Milestone Award</h3>
+                  <span class="company-badge">15 May 2025</span>
+                </div>
+                <p>Recognized for outstanding delivery of responsive application projects and consistent code optimizations in UI/UX frontend engineering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="profile.js"></script>
+</body>
+</html>
