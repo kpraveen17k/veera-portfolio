@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEERA | Master Admin Control</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="emblem"><i class="fa-solid fa-crown"></i></div>
+        <div>
+          <h2>VEERA</h2>
+          <span>Master Admin</span>
+        </div>
+      </div>
+
+      <nav class="admin-nav" id="sectionTabs">
+        <button type="button" class="adm-tab active" data-target="projects"><i class="fa-solid fa-layer-group"></i> Projects</button>
+        <button type="button" class="adm-tab" data-target="skills"><i class="fa-solid fa-code"></i> Skills</button>
+        <button type="button" class="adm-tab" data-target="experience"><i class="fa-solid fa-briefcase"></i> Experience</button>
+        <button type="button" class="adm-tab" data-target="education"><i class="fa-solid fa-graduation-cap"></i> Education</button>
+        <button type="button" class="adm-tab" data-target="certificates"><i class="fa-solid fa-certificate"></i> Certificates</button>
+        <button type="button" class="adm-tab" data-target="blog"><i class="fa-solid fa-newspaper"></i> Blog</button>
+        <button type="button" class="adm-tab" data-target="gallery"><i class="fa-regular fa-image"></i> Gallery</button>
+        <button type="button" class="adm-tab" data-target="messages"><i class="fa-regular fa-envelope"></i> Messages</button>
+        <button type="button" class="adm-tab" data-target="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <a href="veeradashboard.html" class="btn-dash-return"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-content">
+      <header class="admin-top">
+        <div class="header-left-wrap">
+          <button class="mobile-toggle-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+          <div>
+            <h1 id="currentSectionTitle">Projects Manager</h1>
+            <p id="currentSectionDesc">Add, edit, or delete items with instant sync.</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button type="button" class="btn-add-primary" id="openCreateModalBtn"><i class="fa-solid fa-plus"></i> Add New Item</button>
+          <button type="button" class="btn-logout-top" id="adminLogoutBtn" title="Logout"><i class="fa-solid fa-power-off"></i></button>
+        </div>
+      </header>
+
+      <div class="table-card">
+        <table class="adm-data-table">
+          <thead>
+            <tr id="tableHeadRow"></tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Dynamic Universal CRUD Modal -->
+  <div class="modal-overlay" id="crudModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="modalTitle"><i class="fa-solid fa-pen-to-square"></i> Add New Item</h3>
+        <button type="button" class="modal-close" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="crudForm" class="modal-body-form">
+        <input type="hidden" id="editItemIndex" />
+        <div id="dynamicFormFields"></div>
+        <button type="submit" class="btn-save-modal" id="submitFormBtn">
+          <i class="fa-solid fa-floppy-disk"></i> <span>Save & Publish</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase CDN Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

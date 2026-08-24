@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VEERA | My Projects</title>
-  <link rel="stylesheet" href="projects.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VEERA | My Certificates</title>
+  <link rel="stylesheet" href="certificates.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
-<body class="projects-body">
+<body class="certificates-body">
 
   <script>
     const sessionUser = sessionStorage.getItem("veera_active_user");
@@ -22,7 +22,6 @@
   </script>
 
   <div class="app-layout">
-    <!-- EXACT UNCHANGED SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-top-row">
         <div class="sidebar-brand">
@@ -39,15 +38,15 @@
       <nav class="sidebar-nav">
         <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
         <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
-        <a href="projects.html" class="nav-item active"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
         <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
         <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
         <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
-        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="certificates.html" class="nav-item active"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
         <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
         <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
         <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
-        <a href="settings.html" class="nav-item active-admin"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+        <a href="admin.html" class="nav-item admin-link"><i class="fa-solid fa-screwdriver-wrench"></i><span>Admin Hub</span></a>
       </nav>
 
       <div class="sidebar-user-card" id="sidebarUserCard" title="Click to Logout">
@@ -61,13 +60,12 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
       <header class="top-header">
         <div class="header-left">
           <div class="page-title-box">
-            <h1>My Projects 🚀</h1>
-            <p>Things I've built with passion and code.</p>
+            <h1>My Certificates 🛡️</h1>
+            <p>Verified technical credentials, online course awards, and certifications.</p>
           </div>
         </div>
 
@@ -80,7 +78,7 @@
           <div class="header-actions">
             <div class="search-bar">
               <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" id="projectSearchInput" placeholder="Search projects..." />
+              <input type="text" id="certSearch" placeholder="Search certificates..." />
             </div>
             <a href="admin.html" class="icon-bubble" title="Admin Hub"><i class="fa-solid fa-sliders"></i></a>
             <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
@@ -90,110 +88,82 @@
         </div>
       </header>
 
-      <!-- 4 Stats Cards -->
-      <section class="projects-stats-grid">
-        <div class="p-stat-card purple">
-          <div class="p-stat-icon"><i class="fa-solid fa-folder"></i></div>
-          <div class="p-stat-info">
-            <span class="p-stat-lbl">Total Projects</span>
-            <h3 id="statTotalProjects">0</h3>
-            <span class="trend pos">Live Database</span>
+      <section class="metrics-grid">
+        <div class="metric-card purple">
+          <div class="metric-icon purple"><i class="fa-solid fa-award"></i></div>
+          <div class="metric-info">
+            <span class="metric-title">Total Certificates</span>
+            <h3 id="statTotalCert">0</h3>
+            <span class="trend pos">Live Sync</span>
           </div>
         </div>
 
-        <div class="p-stat-card pink">
-          <div class="p-stat-icon"><i class="fa-solid fa-briefcase"></i></div>
-          <div class="p-stat-info">
-            <span class="p-stat-lbl">Completed</span>
-            <h3 id="statCompleted">0</h3>
-            <span class="trend pos">Finished</span>
+        <div class="metric-card pink">
+          <div class="metric-icon pink"><i class="fa-solid fa-laptop-code"></i></div>
+          <div class="metric-info">
+            <span class="metric-title">Verified Proofs</span>
+            <h3 id="statCourses">0</h3>
+            <span class="trend pos">Credentials</span>
           </div>
         </div>
 
-        <div class="p-stat-card blue">
-          <div class="p-stat-icon"><i class="fa-regular fa-circle-dot"></i></div>
-          <div class="p-stat-info">
-            <span class="p-stat-lbl">In Progress</span>
-            <h3 id="statInProgress">0</h3>
-            <span class="trend pos">Ongoing</span>
+        <div class="metric-card blue">
+          <div class="metric-icon blue"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="metric-info">
+            <span class="metric-title">Platforms</span>
+            <h3 id="statPlatforms">NPTEL / IIT</h3>
+            <span class="trend gray">Verified</span>
           </div>
         </div>
 
-        <div class="p-stat-card orange">
-          <div class="p-stat-icon"><i class="fa-solid fa-asterisk"></i></div>
-          <div class="p-stat-info">
-            <span class="p-stat-lbl">Technologies</span>
-            <h3>18+</h3>
-            <span class="trend gray">Explore stack</span>
+        <div class="metric-card orange">
+          <div class="metric-icon orange"><i class="fa-solid fa-trophy"></i></div>
+          <div class="metric-info">
+            <span class="metric-title">Accreditations</span>
+            <h3 id="statAchievements">100%</h3>
+            <span class="trend pos">Authenticated</span>
           </div>
         </div>
       </section>
 
-      <!-- Filter Bar -->
-      <section class="controls-bar">
-        <div class="filter-pills">
-          <button class="filter-btn active" data-filter="all">All Projects</button>
-          <button class="filter-btn" data-filter="completed">Completed</button>
-          <button class="filter-btn" data-filter="in-progress">In Progress</button>
-        </div>
-      </section>
-
-      <!-- Project Cards Grid -->
-      <section class="project-cards-grid" id="projectCardsGrid"></section>
+      <section class="certificates-cards-grid" id="certificatesGrid"></section>
     </main>
   </div>
 
-  <!-- Full Project Information & Multi-Image Gallery Showcase Modal -->
-  <div class="project-modal-overlay" id="projectInfoModal">
-    <div class="project-modal-box">
-      
-      <div class="project-modal-head">
+  <div class="cert-modal-overlay" id="certInfoModal">
+    <div class="cert-modal-box">
+      <div class="cert-modal-head">
         <div class="head-title-wrap">
-          <h2 id="modalProjTitle">Project Details</h2>
+          <h2 id="modalCertTitle">Certificate Details</h2>
           <div class="modal-meta-row">
-            <span class="badge-status-modal" id="modalProjStatus">Completed</span>
-            <span class="modal-date-tag"><i class="fa-regular fa-calendar"></i> Complete Scope & Overview</span>
+            <span class="badge-status-modal" id="modalCertBadge">Issue Date</span>
+            <span class="modal-date-tag" id="modalCertIssuer"><i class="fa-solid fa-building-shield"></i> Authority</span>
           </div>
         </div>
-        <button type="button" class="btn-close-modal" id="closeProjectModalBtn"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" class="btn-close-modal" id="closeCertModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div class="project-modal-body">
-        
-        <!-- Multi-Image Showcase Display -->
+      <div class="cert-modal-body">
         <div class="modal-gallery-showcase">
           <div class="main-image-stage" id="modalMainStage">
-            <img src="images/veera.png" id="modalActiveMainImage" alt="Full View" />
+            <img src="images/veera.png" id="modalActiveMainImage" alt="Certificate Image" />
             <button type="button" class="stage-nav-btn prev" id="modalPrevSlide"><i class="fa-solid fa-chevron-left"></i></button>
             <button type="button" class="stage-nav-btn next" id="modalNextSlide"><i class="fa-solid fa-chevron-right"></i></button>
             <span class="stage-counter" id="modalImageCounter">1 / 1</span>
           </div>
-
-          <!-- Clickable Thumbnails Track -->
           <div class="thumbnails-track" id="modalThumbnailsTrack"></div>
         </div>
 
-        <!-- Info Details Section -->
         <div class="modal-info-section">
-          <h4 class="info-heading"><i class="fa-solid fa-align-left"></i> Complete Description & Technical Features</h4>
+          <h4 class="info-heading"><i class="fa-solid fa-align-left"></i> Credential Scope & Description</h4>
           <div class="modal-full-description" id="modalFullDescription"></div>
-
-          <h4 class="info-heading"><i class="fa-solid fa-microchip"></i> Tech Stack & Tools</h4>
-          <div class="tag-chips modal-chips" id="modalTechChips"></div>
-
-          <div class="modal-actions-footer">
-            <a href="#" target="_blank" class="btn-live-project" id="modalLiveLinkBtn">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Link
-            </a>
-          </div>
         </div>
-
       </div>
     </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="projects.js"></script>
+  <script src="certificates.js"></script>
 </body>
 </html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VEERA | Get In Touch</title>
+  <link rel="stylesheet" href="messages.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="contact-body">
+
+  <!-- Immediate Route Protection & Expiration Check -->
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires, 10)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= 1. SIDEBAR (PC Wide & Mobile 10-15% Left Strip) ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top-row">
+        <div class="sidebar-brand">
+          <div class="brand-logo-frame">
+            <img src="images/veera-logo.png" alt="VEERA" class="sidebar-logo-img" onerror="this.onerror=null; this.src='https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0';" />
+          </div>
+          <div class="brand-text-wrap">
+            <h2 class="brand-name">VEERA</h2>
+            <span class="brand-sub">Master Your Life</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item active"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="admin.html" class="nav-item admin-link"><i class="fa-solid fa-screwdriver-wrench"></i><span>Admin Hub</span></a>
+      </nav>
+
+      <div class="sidebar-user-card" id="sidebarUserCard" title="Click to Logout">
+        <div class="user-avatar-mini">
+          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+        </div>
+        <div class="user-mini-info">
+          <h4>K Praveen Kumar</h4>
+          <p>Veera K</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= 2. MAIN CONTENT (85-90% Width on Mobile) ================= -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="page-title-box">
+            <h1>Get In Touch ✉️</h1>
+            <p>Send me a message, direct inquiries, feedback, or collaboration requests.</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+
+          <div class="header-actions">
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Search contacts..." />
+            </div>
+            <a href="admin.html" class="icon-bubble" title="Admin Hub"><i class="fa-solid fa-sliders"></i></a>
+            <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
+              <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 2x2 Contact Grid -->
+      <section class="contact-grid">
+
+        <!-- 1. Send Me a Message Form -->
+        <div class="contact-card form-card">
+          <div class="card-header">
+            <h3>Send Me a Message</h3>
+            <p>Fill out the form below and I'll get back to you.</p>
+          </div>
+
+          <form id="contactForm" class="contact-inner-form">
+            <div class="input-duo">
+              <div class="form-group">
+                <label>Your Name *</label>
+                <div class="input-wrap">
+                  <i class="fa-regular fa-user"></i>
+                  <input type="text" id="senderName" placeholder="Enter your name" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Your Email *</label>
+                <div class="input-wrap">
+                  <i class="fa-regular fa-envelope"></i>
+                  <input type="email" id="senderEmail" placeholder="Enter your email" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Subject *</label>
+              <div class="input-wrap">
+                <i class="fa-regular fa-file-lines"></i>
+                <input type="text" id="senderSubject" placeholder="Enter subject" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Message *</label>
+              <div class="input-wrap textarea-wrap">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <textarea id="senderMessage" rows="4" placeholder="Write your message here..." required></textarea>
+              </div>
+            </div>
+
+            <div class="form-footer-actions">
+              <button type="submit" class="btn-send-message">
+                <i class="fa-regular fa-paper-plane"></i>
+                <span>Send Message</span>
+              </button>
+              <div class="reply-notice">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Fast response within 24 hrs</span>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. Contact Information -->
+        <div class="contact-card info-card">
+          <div class="card-header">
+            <h3>Contact Information</h3>
+            <p>Direct touch points and channels.</p>
+          </div>
+
+          <div class="info-list">
+            <div class="info-item">
+              <div class="info-icon purple"><i class="fa-solid fa-phone"></i></div>
+              <div class="info-content">
+                <span class="info-title">Phone & WhatsApp</span>
+                <p class="info-val">+91 9381414582</p>
+              </div>
+              <a href="tel:+919381414582" class="btn-pill-action">Call</a>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon blue"><i class="fa-regular fa-envelope"></i></div>
+              <div class="info-content">
+                <span class="info-title">Official Email</span>
+                <p class="info-val">veerapraveenkumar2007@gmail.com</p>
+              </div>
+              <a href="mailto:veerapraveenkumar2007@gmail.com" class="btn-pill-action">Mail</a>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon pink"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="info-content">
+                <span class="info-title">Location</span>
+                <p class="info-val">Tirupati, Andhra Pradesh, India</p>
+              </div>
+              <a href="https://maps.google.com" target="_blank" class="btn-pill-action">Map</a>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon orange"><i class="fa-regular fa-clock"></i></div>
+              <div class="info-content">
+                <span class="info-title">Availability</span>
+                <p class="info-val">Mon - Sat: 9:00 AM - 8:00 PM</p>
+              </div>
+              <span class="status-badge-pill green">Active</span>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon green"><i class="fa-regular fa-comment-dots"></i></div>
+              <div class="info-content">
+                <span class="info-title">Response Rate</span>
+                <p class="info-val">100% Guaranteed</p>
+              </div>
+              <span class="status-badge-pill blue">Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. My Location Card -->
+        <div class="contact-card location-card">
+          <div class="card-header">
+            <h3>My Location</h3>
+          </div>
+
+          <div class="map-preview-wrap">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.309328276634!2d79.41804791483827!3d13.63921589042079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b1a457193f3%3A0xe546bdf776bc7529!2sS.V.%20Government%20Polytechnic%20College!5e0!3m2!1sen!2sin!4v1684300000000!5m2!1sen!2sin" 
+              width="100%" 
+              height="200" 
+              style="border:0; border-radius: 14px;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <div class="map-footer-bar">
+            <div class="loc-details">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Tirupati, Andhra Pradesh, India</strong>
+                <span>PIN: 517501</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="btn-open-map">
+              <span>View Map</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. Connect With Me Card -->
+        <div class="contact-card social-card">
+          <div class="card-header">
+            <h3>Connect With Me</h3>
+            <p>Reach out across my social and code networks.</p>
+          </div>
+
+          <div class="platform-list">
+            <div class="platform-item">
+              <div class="plat-left">
+                <div class="plat-icon dark"><i class="fa-brands fa-github"></i></div>
+                <div>
+                  <strong>GitHub</strong>
+                  <p>github.com/kpraveen17k</p>
+                </div>
+              </div>
+              <a href="https://github.com/kpraveen17k" target="_blank" class="btn-pill-action">Visit</a>
+            </div>
+
+            <div class="platform-item">
+              <div class="plat-left">
+                <div class="plat-icon blue"><i class="fa-brands fa-linkedin-in"></i></div>
+                <div>
+                  <strong>LinkedIn</strong>
+                  <p>linkedin.com/in/k-praveen-kumar-17k</p>
+                </div>
+              </div>
+              <a href="https://www.linkedin.com/in/k-praveen-kumar-17k/?isSelfProfile=false" target="_blank" class="btn-pill-action">Connect</a>
+            </div>
+
+            <div class="platform-item">
+              <div class="plat-left">
+                <div class="plat-icon dark"><i class="fa-brands fa-x-twitter"></i></div>
+                <div>
+                  <strong>X (Twitter)</strong>
+                  <p>x.com/14317Kpraveen</p>
+                </div>
+              </div>
+              <a href="https://x.com/14317Kpraveen" target="_blank" class="btn-pill-action">Follow</a>
+            </div>
+
+            <div class="platform-item">
+              <div class="plat-left">
+                <div class="plat-icon green"><i class="fa-brands fa-whatsapp"></i></div>
+                <div>
+                  <strong>WhatsApp</strong>
+                  <p>+91 9381414582</p>
+                </div>
+              </div>
+              <a href="https://wa.me/919381414582" target="_blank" class="btn-pill-action">Chat</a>
+            </div>
+          </div>
+
+          <div class="collab-banner">
+            <div class="collab-text">
+              <div class="collab-tag"><i class="fa-solid fa-handshake"></i> Let's build something great!</div>
+              <p>Available for freelance projects, IoT designs, and frontend development.</p>
+            </div>
+            <div class="collab-rocket">🚀</div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="messages.js"></script>
+</body>
+</html>

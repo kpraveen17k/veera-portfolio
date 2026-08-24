@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Back button prevention
+  // 1. Session Lock
   history.pushState(null, null, location.href);
-  window.onpopstate = function () {
-    history.go(1);
-  };
+  window.onpopstate = () => history.go(1);
 
-  // 2. Load dynamic user email from session
+  // 2. Active User Details
+  const activeUser = sessionStorage.getItem("veera_active_user") || "Veera";
   const activeEmail = sessionStorage.getItem("veera_active_email");
-  if (activeEmail) {
-    const heroEmail = document.getElementById("heroEmailDisplay");
-    if (heroEmail) heroEmail.innerText = activeEmail;
+  
+  const heroEmail = document.getElementById("heroEmailDisplay");
+  if (heroEmail && activeEmail) {
+    heroEmail.innerText = activeEmail;
   }
 
   // 3. 30-Minute Auto-Logout Countdown
-  const expiresAt = parseInt(sessionStorage.getItem("veera_session_expires") || 0);
+  const expiresAt = parseInt(sessionStorage.getItem("veera_session_expires") || 0, 10);
   const timerDisplay = document.getElementById("sessionTimerDisplay");
 
   function updateTimer() {
@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeLeft = expiresAt - now;
 
     if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      alert("⚠️ Session expired (30 Minutes Over)! Please login again.");
       sessionStorage.clear();
       window.location.replace("index.html");
       return;
@@ -31,18 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-    const formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
-
     if (timerDisplay) {
-      timerDisplay.innerText = `${formattedMinutes}:${formattedSeconds}`;
+      timerDisplay.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
   }
-
   updateTimer();
-  const timerInterval = setInterval(updateTimer, 1000);
+  setInterval(updateTimer, 1000);
 
-  // 4. Dynamic Sub-Tabs Switching with Visual Data
+  // 4. Live Counter Synchronization from LocalStorage
+  let storedProjects = [];
+  try {
+    storedProjects = JSON.parse(localStorage.getItem("veera_projects_data") || localStorage.getItem("veera_custom_projects") || "[]");
+  } catch {
+    storedProjects = [];
+  }
+  const projCount = storedProjects.length > 0 ? storedProjects.length : 6;
+  
+  const heroProj = document.getElementById("heroProjectsCount");
+  const subProj = document.getElementById("subStatProjCount");
+  if (heroProj) heroProj.innerText = projCount;
+  if (subProj) subProj.innerText = projCount;
+
+  // 5. Dynamic Sub-Tabs Switching
   const pTabs = document.querySelectorAll('.p-tab');
   const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -50,11 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       const targetTab = tab.getAttribute('data-tab');
 
-      // Update button active state
       pTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
 
-      // Update tab pane view
       tabPanes.forEach(pane => {
         pane.classList.remove('active');
         if (pane.id === `tab-${targetTab}`) {
@@ -64,23 +70,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Logout
-  function performLogout() {
+  // 6. Logout Handlers
+  function handleLogout() {
     if (confirm("Are you sure you want to logout?")) {
-      clearInterval(timerInterval);
       sessionStorage.clear();
       window.location.replace("index.html");
     }
   }
 
   const logoutTrigger = document.getElementById("logoutTrigger");
-  if (logoutTrigger) logoutTrigger.addEventListener("click", performLogout);
+  const sidebarUserCard = document.getElementById("sidebarUserCard");
+  if (logoutTrigger) logoutTrigger.addEventListener("click", handleLogout);
+  if (sidebarUserCard) sidebarUserCard.addEventListener("click", handleLogout);
 
-  // 6. Edit Profile Button
+  // 7. Edit Profile Prompt
   const editProfileBtn = document.getElementById("editProfileBtn");
   if (editProfileBtn) {
     editProfileBtn.addEventListener("click", () => {
-      alert("Edit Profile: You can update your bio, skills, and links.");
+      window.location.href = "admin.html";
     });
   }
 });

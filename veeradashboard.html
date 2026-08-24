@@ -2,475 +2,236 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>VEERA | Master Your Life Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
-  <!-- FontAwesome 6 Pro/Free Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body class="dashboard-body">
 
-  <!-- Immediate Route Protection (Auto-Redirect to Login if not authenticated) -->
   <script>
     const sessionUser = sessionStorage.getItem("veera_active_user");
     const sessionExpires = sessionStorage.getItem("veera_session_expires");
     const currentTime = new Date().getTime();
 
-    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires)) {
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires, 10)) {
       sessionStorage.clear();
       window.location.replace("index.html");
     }
   </script>
 
-  <!-- App Layout Container -->
   <div class="app-layout">
 
-    <!-- ================= 1. LEFT SIDEBAR (PC) ================= -->
+    <!-- ================= LEFT SIDEBAR ================= -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <div class="crown-emblem">
-          <i class="fa-solid fa-crown"></i>
-        </div>
-        <div>
-          <h2 class="brand-name">VEERA</h2>
-          <span class="brand-sub">Master Your Life</span>
+      <div class="sidebar-top-row">
+        <div class="sidebar-brand">
+          <div class="brand-logo-frame">
+            <img src="images/veera-logo.png" alt="VEERA" class="sidebar-logo-img" onerror="this.onerror=null; this.src='images/veera.png';" />
+          </div>
+          <div class="brand-text-wrap">
+            <h2 class="brand-name">VEERA</h2>
+            <span class="brand-sub">Master Your Life</span>
+          </div>
         </div>
       </div>
 
       <nav class="sidebar-nav">
-        <a href="veeradashboard.html" class="nav-item active">
-          <i class="fa-solid fa-house"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-          <i class="fa-regular fa-user"></i>
-          <span>Profile</span>
-        </a>
-        <a href="projects.html" class="nav-item">
-          <i class="fa-solid fa-layer-group"></i>
-          <span>Projects</span>
-        </a>
-        <a href="skills.html" class="nav-item">
-          <i class="fa-solid fa-code"></i>
-          <span>Skills</span>
-        </a>
-        <a href="experience.html" class="nav-item">
-          <i class="fa-solid fa-briefcase"></i>
-          <span>Experience</span>
-        </a>
-        <a href="education.html" class="nav-item">
-          <i class="fa-solid fa-graduation-cap"></i>
-          <span>Education</span>
-        </a>
-        <a href="certificates.html" class="nav-item">
-          <i class="fa-solid fa-certificate"></i>
-          <span>Certificates</span>
-        </a>
-        <a href="blog.html" class="nav-item">
-          <i class="fa-solid fa-newspaper"></i>
-          <span>Blog</span>
-        </a>
-        <a href="gallery.html" class="nav-item">
-          <i class="fa-regular fa-image"></i>
-          <span>Gallery</span>
-        </a>
-        <a href="messages.html" class="nav-item">
-          <i class="fa-regular fa-envelope"></i>
-          <span>Messages</span>
-        </a>
-        <a href="settings.html" class="nav-item">
-          <i class="fa-solid fa-gear"></i>
-          <span>Settings</span>
-        </a>
+        <a href="veeradashboard.html" class="nav-item active"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="admin.html" class="nav-item admin-link"><i class="fa-solid fa-screwdriver-wrench"></i><span>Admin Hub</span></a>
       </nav>
 
-      <!-- Sidebar User Profile Card (Online + Offline Image Fallback) -->
-      <div class="sidebar-user-card" id="sidebarUserCard">
+      <div class="sidebar-user-card" id="sidebarUserCard" title="Click to Logout">
         <div class="user-avatar-wrap">
-          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" 
-               alt="Veera Avatar" 
-               onerror="this.onerror=null; this.src='images/veera.png';" />
+          <img src="images/veera.png" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
           <span class="online-indicator"></span>
         </div>
-        <h4 id="pcUserName">K Praveen Kumar</h4>
-        <p class="user-role">Web Developer</p>
-        <div class="status-pill">
-          <span class="green-dot"></span> Online
-        </div>
+        <h4 id="pcUserName">Veera K</h4>
+        <p class="user-role" id="pcUserRole">Developer</p>
       </div>
     </aside>
 
-    <!-- ================= 2. MAIN DASHBOARD CONTENT ================= -->
+    <!-- ================= MAIN DASHBOARD CONTENT ================= -->
     <main class="main-content">
       
       <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
-          <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fa-solid fa-bars"></i>
-          </button>
           <div class="greeting-box">
-            <h1>Welcome back, <span class="accent-text" id="headerUserName">Praveen!</span> </h1>
-            <p>Here's what's happening with your portfolio today.</p>
+            <h1>Welcome back, <span class="accent-text" id="headerUserName">User!</span> 👋</h1>
+            <p>Real-time analytics and portfolio control center.</p>
           </div>
         </div>
 
         <div class="header-right">
-          <div class="search-bar">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search anything..." />
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
           </div>
 
           <div class="header-actions">
-            <div class="icon-bubble has-badge" data-badge="3">
-              <i class="fa-regular fa-bell"></i>
-            </div>
-            <div class="icon-bubble has-badge" data-badge="5">
-              <i class="fa-regular fa-envelope"></i>
-            </div>
-            <!-- Header Profile Avatar (Online + Offline Image Fallback) -->
+            <a href="admin.html" class="icon-bubble" title="Admin Hub"><i class="fa-solid fa-sliders"></i></a>
             <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
-              <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" 
-                   alt="Veera Avatar" 
-                   onerror="this.onerror=null; this.src='images/veera.png';" />
+              <img src="images/veera.png" alt="Veera Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
             </div>
           </div>
         </div>
       </header>
 
-      <!-- Weather & 30-Minute Countdown Strip -->
+      <!-- Live Date Strip -->
       <section class="meta-strip">
         <div class="meta-item">
           <i class="fa-regular fa-calendar"></i>
           <span id="currentLiveDate">Monday, 24 Aug 2026</span>
         </div>
         <div class="meta-item">
-          <i class="fa-solid fa-sun weather-sun"></i>
-          <span>28°C Tirupati, India</span>
-        </div>
-        <div class="meta-item session-timer" id="sessionTimerCard">
-          <i class="fa-solid fa-clock-rotate-left"></i>
-          <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          <i class="fa-solid fa-sun weather-sun" id="weatherIcon"></i>
+          <span id="liveWeatherText">28°C Tirupati, India</span>
         </div>
       </section>
 
-      <!-- Mobile Top Weather Card (Shown on Mobile View) -->
-      <section class="mobile-weather-card">
-        <div class="mobile-weather-left">
-          <div class="cal-box"><i class="fa-regular fa-calendar"></i></div>
-          <div>
-            <div class="m-date">Monday, 24 Aug 2026</div>
-            <div class="m-temp"><i class="fa-solid fa-sun"></i> 28°C Tirupati, India</div>
-          </div>
-        </div>
-        <div class="mobile-quote-right">
-          <i class="fa-solid fa-quote-left"></i>
-          <p>Stay focused and make it happen!</p>
-        </div>
-      </section>
-
-      <!-- 4 Quick Stats Cards -->
+      <!-- Quick Stats Grid -->
       <section class="stats-grid">
         <div class="stat-card purple">
-          <div class="stat-icon"><i class="fa-solid fa-folder"></i></div>
+          <div class="stat-icon"><i class="fa-solid fa-folder-open"></i></div>
           <div class="stat-body">
-            <span class="stat-title">Total Projects</span>
-            <h3 class="stat-value">29</h3>
-            <span class="stat-trend positive">+12% this month</span>
+            <span class="stat-title">Projects</span>
+            <h3 class="stat-value" id="dashTotalProjectsCount">0</h3>
+            <span class="stat-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> Live</span>
           </div>
-          <svg class="stat-wave" viewBox="0 0 100 25">
-            <path d="M0,15 Q25,5 50,15 T100,8" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
-          </svg>
         </div>
 
         <div class="stat-card green">
-          <div class="stat-icon"><i class="fa-brands fa-github"></i></div>
+          <div class="stat-icon"><i class="fa-solid fa-code"></i></div>
           <div class="stat-body">
-            <span class="stat-title">GitHub Contributions</span>
-            <h3 class="stat-value">487</h3>
-            <span class="stat-trend positive">+18% this month</span>
+            <span class="stat-title">Skills</span>
+            <h3 class="stat-value" id="dashSkillsCount">0</h3>
+            <span class="stat-trend positive"><i class="fa-solid fa-check"></i> Stacks</span>
           </div>
-          <svg class="stat-wave" viewBox="0 0 100 25">
-            <path d="M0,18 Q25,8 50,18 T100,5" fill="none" stroke="#10b981" stroke-width="2.5"/>
-          </svg>
         </div>
 
         <div class="stat-card orange">
-          <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="stat-icon"><i class="fa-solid fa-certificate"></i></div>
           <div class="stat-body">
             <span class="stat-title">Certificates</span>
-            <h3 class="stat-value">12</h3>
-            <span class="stat-trend positive">+2 this month</span>
+            <h3 class="stat-value" id="dashCertCount">0</h3>
+            <span class="stat-trend positive"><i class="fa-solid fa-shield-halved"></i> Valid</span>
           </div>
-          <svg class="stat-wave" viewBox="0 0 100 25">
-            <path d="M0,12 Q25,20 50,10 T100,14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
-          </svg>
         </div>
 
         <div class="stat-card blue">
           <div class="stat-icon"><i class="fa-regular fa-eye"></i></div>
           <div class="stat-body">
-            <span class="stat-title">Profile Views</span>
-            <h3 class="stat-value">1.2K</h3>
-            <span class="stat-trend positive">+25% this month</span>
+            <span class="stat-title">Views</span>
+            <h3 class="stat-value" id="dashProfileReach">1.4K</h3>
+            <span class="stat-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +28%</span>
           </div>
-          <svg class="stat-wave" viewBox="0 0 100 25">
-            <path d="M0,16 Q25,6 50,14 T100,6" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
-          </svg>
         </div>
       </section>
 
-      <!-- Middle Analytical Row -->
+      <!-- Analytics Row -->
       <section class="analytics-row">
         
-        <!-- Profile Overview Card -->
+        <!-- Profile Completion Card -->
         <div class="content-card profile-overview-card">
           <div class="card-head">
-            <h3>Profile Overview</h3>
-            <button class="menu-dots"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            <h3>Profile Completion</h3>
+            <a href="profile.html" class="link-view-all" title="View Full Profile"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </div>
 
           <div class="overview-body">
             <div class="donut-chart-box">
               <svg class="donut-svg" viewBox="0 0 36 36">
-                <defs>
-                  <linearGradient id="donutGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#3b82f6"/>
-                    <stop offset="50%" stop-color="#a855f7"/>
-                    <stop offset="100%" stop-color="#ec4899"/>
-                  </linearGradient>
-                </defs>
                 <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="circle-fill" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle-fill" stroke-dasharray="92, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               </svg>
               <div class="donut-text">
-                <h2>85%</h2>
-                <span>Completed</span>
+                <h2>92%</h2>
+                <span>Complete</span>
               </div>
             </div>
 
             <div class="progress-list">
               <div class="progress-bar-item">
-                <div class="p-info"><span class="p-icon purple"><i class="fa-regular fa-user"></i></span> Personal Info <strong>100%</strong></div>
+                <div class="p-info">
+                  <span class="p-label"><i class="fa-regular fa-user"></i> Personal</span>
+                  <span class="p-val">100%</span>
+                </div>
                 <div class="p-track"><div class="p-fill purple" style="width: 100%;"></div></div>
               </div>
               <div class="progress-bar-item">
-                <div class="p-info"><span class="p-icon blue"><i class="fa-solid fa-code"></i></span> Skills <strong>90%</strong></div>
-                <div class="p-track"><div class="p-fill blue" style="width: 90%;"></div></div>
+                <div class="p-info">
+                  <span class="p-label"><i class="fa-solid fa-code"></i> Skills</span>
+                  <span class="p-val">95%</span>
+                </div>
+                <div class="p-track"><div class="p-fill blue" style="width: 95%;"></div></div>
               </div>
               <div class="progress-bar-item">
-                <div class="p-info"><span class="p-icon orange"><i class="fa-solid fa-briefcase"></i></span> Experience <strong>80%</strong></div>
-                <div class="p-track"><div class="p-fill orange" style="width: 80%;"></div></div>
-              </div>
-              <div class="progress-bar-item">
-                <div class="p-info"><span class="p-icon green"><i class="fa-solid fa-graduation-cap"></i></span> Education <strong>70%</strong></div>
-                <div class="p-track"><div class="p-fill green" style="width: 70%;"></div></div>
+                <div class="p-info">
+                  <span class="p-label"><i class="fa-solid fa-briefcase"></i> Experience</span>
+                  <span class="p-val">90%</span>
+                </div>
+                <div class="p-track"><div class="p-fill orange" style="width: 90%;"></div></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Skills Radar Chart (PC/Desktop) -->
+        <!-- Skills Radar Card (PC Only) -->
         <div class="content-card skills-radar-card">
           <div class="card-head">
-            <h3>Skills Overview</h3>
+            <h3>Skills Radar</h3>
+            <a href="skills.html" class="link-view-all" title="View Skills"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </div>
           <div class="radar-container">
             <span class="radar-label top">HTML/CSS</span>
             <span class="radar-label top-right">JavaScript</span>
             <span class="radar-label bottom-right">React</span>
             <span class="radar-label bottom">Node.js</span>
-            <span class="radar-label bottom-left">Python</span>
-            <span class="radar-label top-left">UI/UX</span>
+            <span class="radar-label bottom-left">Firebase</span>
+            <span class="radar-label top-left">IoT</span>
             
             <svg viewBox="0 0 200 200" class="radar-svg">
               <polygon points="100,20 170,60 170,140 100,180 30,140 30,60" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>
               <polygon points="100,50 145,75 145,125 100,150 55,125 55,75" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>
-              <polygon points="100,30 160,65 155,130 100,165 45,135 40,70" fill="url(#radarGradient)" stroke="#d946ef" stroke-width="2"/>
-              <defs>
-                <linearGradient id="radarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
-                  <stop offset="100%" stop-color="#ec4899" stop-opacity="0.6"/>
-                </linearGradient>
-              </defs>
+              <polygon points="100,28 165,65 158,132 100,165 42,135 38,68" fill="rgba(139,92,246,0.3)" stroke="#8b5cf6" stroke-width="2"/>
             </svg>
           </div>
         </div>
 
-        <!-- Upcoming Tasks Card -->
-        <div class="content-card tasks-card">
-          <div class="card-head">
-            <h3>Upcoming Tasks</h3>
-            <button class="menu-dots"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-          </div>
-
-          <div class="tasks-list">
-            <div class="task-row">
-              <div class="task-left"><span class="task-icon blue"><i class="fa-solid fa-file-lines"></i></span> Update Portfolio</div>
-              <div class="task-right">Today <i class="fa-regular fa-calendar"></i></div>
-            </div>
-            <div class="task-row">
-              <div class="task-left"><span class="task-icon purple"><i class="fa-solid fa-code-merge"></i></span> New Project Upload</div>
-              <div class="task-right">Tomorrow <i class="fa-regular fa-calendar"></i></div>
-            </div>
-            <div class="task-row">
-              <div class="task-left"><span class="task-icon pink"><i class="fa-regular fa-newspaper"></i></span> Blog Post</div>
-              <div class="task-right">25 May <i class="fa-regular fa-calendar"></i></div>
-            </div>
-            <div class="task-row">
-              <div class="task-left"><span class="task-icon orange"><i class="fa-solid fa-terminal"></i></span> Learn Next.js</div>
-              <div class="task-right">30 May <i class="fa-regular fa-calendar"></i></div>
-            </div>
-          </div>
-
-          <a href="#" class="view-tasks-link">View All Tasks <i class="fa-solid fa-chevron-right"></i></a>
-        </div>
-
       </section>
 
-      <!-- Bottom Row: Recent Projects & Activity Feed -->
+      <!-- Bottom Row: Dynamic Recent Projects -->
       <section class="bottom-row">
-        
-        <!-- Recent Projects Horizontal Cards -->
-        <div class="content-card projects-card">
+        <div class="content-card projects-card" style="width: 100%;">
           <div class="card-head">
-            <h3>Recent Projects</h3>
-            <a href="#" class="link-view-all">View All</a>
+            <h3 id="recentProjectsCountTitle">Recent Projects</h3>
+            <a href="projects.html" class="link-view-all" title="Explore Projects">
+              <span>View All</span>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
           </div>
-
-          <div class="projects-slider">
-            <div class="project-item">
-              <div class="project-mockup dark-blue">
-                <span class="badge-mockup">VEERA Securer</span>
-              </div>
-              <div class="project-info">
-                <h4>VEERA Secure Hub</h4>
-                <div class="project-footer">
-                  <span>Web Application</span>
-                  <span class="badge-live">Live</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-item">
-              <div class="project-mockup light-blue">
-                <span class="badge-mockup">Student Attendance</span>
-              </div>
-              <div class="project-info">
-                <h4>Student Attendance System</h4>
-                <div class="project-footer">
-                  <span>Web Application</span>
-                  <span class="badge-live">Live</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-item">
-              <div class="project-mockup neon-pink">
-                <span class="badge-mockup">Music Player</span>
-              </div>
-              <div class="project-info">
-                <h4>Music Player</h4>
-                <div class="project-footer">
-                  <span>Frontend Project</span>
-                  <span class="badge-live">Live</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="projects-slider step-by-step-mobile" id="dashRecentProjectsSlider"></div>
         </div>
-
-        <!-- Activity Feed -->
-        <div class="content-card activity-card">
-          <div class="card-head">
-            <h3>Activity Feed</h3>
-            <a href="#" class="link-view-all">View All</a>
-          </div>
-
-          <div class="activity-timeline">
-            <div class="timeline-row">
-              <div class="t-icon blue"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-              <div class="t-text">
-                <p>New project "VEERA Secure Hub" published</p>
-                <span>2 hours ago</span>
-              </div>
-              <i class="fa-solid fa-chevron-right t-arrow"></i>
-            </div>
-
-            <div class="timeline-row">
-              <div class="t-icon orange"><i class="fa-solid fa-award"></i></div>
-              <div class="t-text">
-                <p>Certificate "React Developer" added</p>
-                <span>5 hours ago</span>
-              </div>
-              <i class="fa-solid fa-chevron-right t-arrow"></i>
-            </div>
-
-            <div class="timeline-row">
-              <div class="t-icon green"><i class="fa-regular fa-user"></i></div>
-              <div class="t-text">
-                <p>Profile updated successfully</p>
-                <span>1 day ago</span>
-              </div>
-              <i class="fa-solid fa-chevron-right t-arrow"></i>
-            </div>
-
-            <div class="timeline-row">
-              <div class="t-icon purple"><i class="fa-regular fa-newspaper"></i></div>
-              <div class="t-text">
-                <p>New blog post published</p>
-                <span>2 days ago</span>
-              </div>
-              <i class="fa-solid fa-chevron-right t-arrow"></i>
-            </div>
-          </div>
-        </div>
-
       </section>
-
-      <!-- Bottom Quote Capsule -->
-      <footer class="dash-footer-quote">
-        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
-        <div class="quote-text">
-          <p>"Every great developer you know got there by solving problems they were unqualified to solve until they actually did it."</p>
-          <span>– Patrick McKenzie</span>
-        </div>
-      </footer>
 
     </main>
 
-    <!-- Floating Action Button (FAB) -->
-    <button class="fab-btn" title="Add New Item">
-      <i class="fa-solid fa-plus"></i>
-    </button>
-
-    <!-- ================= 3. MOBILE BOTTOM NAVIGATION ================= -->
-    <nav class="mobile-bottom-nav">
-      <a href="veeradashboard.html" class="b-nav-item active">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-      </a>
-      <a href="projects.html" class="b-nav-item">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>Projects</span>
-      </a>
-      <a href="skills.html" class="b-nav-item">
-        <i class="fa-regular fa-calendar-check"></i>
-        <span>Tasks</span>
-      </a>
-      <a href="profile.html" class="b-nav-item">
-        <i class="fa-regular fa-user"></i>
-        <span>Profile</span>
-      </a>
-      <a href="#" class="b-nav-item" id="mobileLogoutBtn">
-        <i class="fa-solid fa-border-all"></i>
-        <span>Logout</span>
-      </a>
-    </nav>
-
   </div>
 
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="dashboard.js"></script>
 </body>
 </html>

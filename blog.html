@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VEERA | Blog & Tech Tips</title>
+  <link rel="stylesheet" href="blog.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="blog-body">
+
+  <!-- Route Guard Session Check -->
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires, 10)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= 1. SIDEBAR (PC Wide & Mobile 10-15% Left Strip) ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top-row">
+        <div class="sidebar-brand">
+          <div class="brand-logo-frame">
+            <img src="images/veera-logo.png" alt="VEERA" class="sidebar-logo-img" onerror="this.onerror=null; this.src='https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0';" />
+          </div>
+          <div class="brand-text-wrap">
+            <h2 class="brand-name">VEERA</h2>
+            <span class="brand-sub">Master Your Life</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item active"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="admin.html" class="nav-item admin-link"><i class="fa-solid fa-screwdriver-wrench"></i><span>Admin Hub</span></a>
+      </nav>
+
+      <div class="sidebar-user-card" id="sidebarUserCard" title="Click to Logout">
+        <div class="user-avatar-mini">
+          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+        </div>
+        <div class="user-mini-info">
+          <h4>K Praveen Kumar</h4>
+          <p>Veera K</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= 2. MAIN CONTENT (85-90% Width on Mobile) ================= -->
+    <main class="main-content">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="page-title-box">
+            <h1>VEERA Blog ✍️</h1>
+            <p>Tech Tips • Electronics • IoT • Programming Tutorials</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+
+          <div class="header-actions">
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="blogSearch" placeholder="Search blog articles..." />
+            </div>
+            <a href="admin.html" class="icon-bubble" title="Admin Hub"><i class="fa-solid fa-sliders"></i></a>
+            <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
+              <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Featured Hero Banner Slider -->
+      <section class="featured-hero-banner">
+        <div class="hero-content">
+          <span class="featured-tag"><i class="fa-solid fa-fire"></i> Featured Post</span>
+          <h2>Learn Arduino Step by Step</h2>
+          <p>Basics to Advanced Projects for Electronics Beginners</p>
+          <a href="#blogGrid" class="btn-read-hero">Read More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="hero-image-wrap">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Arduino Microcontroller" />
+        </div>
+
+        <button class="hero-arrow-btn prev" title="Previous Post"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="hero-arrow-btn next" title="Next Post"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="hero-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </section>
+
+      <!-- Filter Category Chips -->
+      <section class="filter-chips-row">
+        <button class="filter-chip active" data-category="all">All</button>
+        <button class="filter-chip" data-category="electronics">Electronics</button>
+        <button class="filter-chip" data-category="iot">IoT</button>
+        <button class="filter-chip" data-category="arduino">Arduino</button>
+        <button class="filter-chip" data-category="programming">Programming</button>
+        <button class="filter-chip" data-category="ai">AI</button>
+        <button class="filter-chip" data-category="projects">Projects</button>
+      </section>
+
+      <!-- Articles Grid (3-Cols on PC, Vertical Stacked on Mobile) -->
+      <section class="blog-cards-grid" id="blogGrid">
+        
+        <!-- Post 1 -->
+        <article class="blog-card" data-category="electronics">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1517055729445-fa7d27394b48?auto=format&fit=crop&w=600&q=80" alt="Raspberry Pi" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill purple">Electronics</span>
+            <h3>Raspberry Pi Basics & Setup Guide</h3>
+            <p>Complete beginner tutorial on OS configuration, GPIO pinouts, and network bindings.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 20, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 1.2K views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>124</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="blog-card" data-category="iot">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=600&q=80" alt="IoT Projects" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill blue">IoT</span>
+            <h3>Top 10 IoT Projects for Beginners</h3>
+            <p>Simple and impactful IoT prototypes using ESP32, Firebase telemetry, and automation relays.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 18, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 980 views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>98</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="blog-card" data-category="programming">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="VS Code" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill pink">Programming</span>
+            <h3>VS Code Shortcuts for Developers</h3>
+            <p>Speed up frontend & backend development using productivity keybindings and extensions.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 16, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 1.4K views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>142</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="blog-card" data-category="arduino">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=600&q=80" alt="OLED Display" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill purple">Arduino</span>
+            <h3>OLED Display with Arduino & C++</h3>
+            <p>Display live sensor metrics, animated graphics, and status text on SSD1306 displays.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 14, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 876 views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>87</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 5 -->
+        <article class="blog-card" data-category="ai">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80" alt="AI Electronics" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill blue">Technology</span>
+            <h3>Future of AI in Embedded Hardware</h3>
+            <p>How Edge AI, micro-neural models, and TinyML are transforming intelligent sensors.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 12, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 1.1K views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>110</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 6 -->
+        <article class="blog-card" data-category="projects">
+          <div class="card-thumb">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="ESP32 Board" />
+          </div>
+          <div class="card-body">
+            <span class="tag-pill orange">Projects</span>
+            <h3>ESP32 vs ESP8266 Comparison</h3>
+            <p>Detailed performance benchmark for selecting the best micro-controller for your IoT project.</p>
+            <div class="card-meta">
+              <span><i class="fa-regular fa-calendar"></i> Aug 10, 2026</span>
+              <span><i class="fa-regular fa-eye"></i> 1.3K views</span>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn-card-read">Read More <i class="fa-solid fa-arrow-right"></i></a>
+              <button class="btn-like" onclick="likePost(this)"><i class="fa-regular fa-heart"></i> <span>95</span></button>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="blog.js"></script>
+</body>
+</html>

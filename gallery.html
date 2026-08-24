@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VEERA | My Gallery</title>
+  <link rel="stylesheet" href="gallery.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="gallery-body">
+
+  <!-- Immediate Route Protection & Expiration Check -->
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires, 10)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= 1. SIDEBAR (PC Wide & Mobile 10-15% Left Strip) ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top-row">
+        <div class="sidebar-brand">
+          <div class="brand-logo-frame">
+            <img src="images/veera-logo.png" alt="VEERA" class="sidebar-logo-img" onerror="this.onerror=null; this.src='https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0';" />
+          </div>
+          <div class="brand-text-wrap">
+            <h2 class="brand-name">VEERA</h2>
+            <span class="brand-sub">Master Your Life</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item active"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="admin.html" class="nav-item admin-link"><i class="fa-solid fa-screwdriver-wrench"></i><span>Admin Hub</span></a>
+      </nav>
+
+      <div class="sidebar-user-card" id="sidebarUserCard" title="Click to Logout">
+        <div class="user-avatar-mini">
+          <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+        </div>
+        <div class="user-mini-info">
+          <h4>K Praveen Kumar</h4>
+          <p>Veera K</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= 2. MAIN CONTENT (85-90% Width on Mobile) ================= -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="page-title-box">
+            <h1>My Gallery 📸</h1>
+            <p>Moments, project albums, achievements & memory archives.</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+
+          <div class="header-actions">
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="gallerySearchInput" placeholder="Search photos..." />
+            </div>
+            <a href="admin.html" class="icon-bubble" title="Admin Hub"><i class="fa-solid fa-sliders"></i></a>
+            <div class="avatar-header" id="logoutTrigger" title="Click to Logout">
+              <img src="https://photos.fife.usercontent.google.com/pw/AP1GczN2OZpPVy20ODCsj59N4bnlxSBxTxu9q_AtJz5WdtZcza_EgGAUtQuP=w360-h360-s-no-gm?authuser=0" alt="Avatar" onerror="this.onerror=null; this.src='images/veera.png';" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 4 Quick Stats -->
+      <section class="stats-grid">
+        <div class="stat-card purple">
+          <div class="stat-icon"><i class="fa-regular fa-image"></i></div>
+          <div class="stat-details">
+            <span class="stat-title">Total Photos</span>
+            <h3 class="stat-value" id="countPhotos">186</h3>
+            <span class="trend pos">Verified Media</span>
+          </div>
+        </div>
+
+        <div class="stat-card pink">
+          <div class="stat-icon"><i class="fa-regular fa-folder-open"></i></div>
+          <div class="stat-details">
+            <span class="stat-title">Albums</span>
+            <h3 class="stat-value" id="countAlbums">12</h3>
+            <span class="trend pos">Categories</span>
+          </div>
+        </div>
+
+        <div class="stat-card blue">
+          <div class="stat-icon"><i class="fa-solid fa-video"></i></div>
+          <div class="stat-details">
+            <span class="stat-title">Videos</span>
+            <h3 class="stat-value" id="countVideos">24</h3>
+            <span class="trend gray">Demos & Logs</span>
+          </div>
+        </div>
+
+        <div class="stat-card orange">
+          <div class="stat-icon"><i class="fa-regular fa-star"></i></div>
+          <div class="stat-details">
+            <span class="stat-title">Highlights</span>
+            <h3 class="stat-value" id="countFavorites">56</h3>
+            <span class="trend pos">Top Moments</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Filter Pills & Controls -->
+      <section class="filter-controls-row">
+        <div class="filter-pills" id="filterPillsContainer">
+          <button class="pill-btn active" data-filter="all">All</button>
+          <button class="pill-btn" data-filter="projects">Projects</button>
+          <button class="pill-btn" data-filter="events">Events</button>
+          <button class="pill-btn" data-filter="certificates">Certificates</button>
+          <button class="pill-btn" data-filter="college">College</button>
+          <button class="pill-btn" data-filter="travel">Travel</button>
+        </div>
+
+        <div class="view-and-sort">
+          <div class="sort-wrapper">
+            <span>Sort by:</span>
+            <select id="sortSelect">
+              <option value="latest">Latest</option>
+              <option value="oldest">Oldest</option>
+              <option value="popular">Most Photos</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery Grid (4-Cols PC, Vertical Stacked on Mobile) -->
+      <section class="gallery-grid" id="galleryGrid"></section>
+
+      <!-- Bottom Load More -->
+      <div class="load-more-wrapper">
+        <button class="btn-load-more" id="btnLoadMore">
+          <span>Load More Photos</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="gallery.js"></script>
+</body>
+</html>

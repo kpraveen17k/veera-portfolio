@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEERA | Settings</title>
+  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="settings-body">
+
+  <script>
+    const sessionUser = sessionStorage.getItem("veera_active_user");
+    const sessionExpires = sessionStorage.getItem("veera_session_expires");
+    const currentTime = new Date().getTime();
+
+    if (!sessionUser || !sessionExpires || currentTime > parseInt(sessionExpires)) {
+      sessionStorage.clear();
+      window.location.replace("index.html");
+    }
+  </script>
+
+  <div class="app-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="crown-emblem"><i class="fa-solid fa-crown"></i></div>
+        <div><h2 class="brand-name">VEERA</h2><span class="brand-sub">Master Your Life</span></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
+        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
+        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
+        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
+        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+        <a href="settings.html" class="nav-item active"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-user-card" id="sidebarUserCard">
+        <div class="user-avatar-mini">
+          <img src="images/veera.png" alt="Avatar" onerror="this.src='https://ui-avatars.com/api/?name=Veera+K&background=8b5cf6&color=fff';" />
+        </div>
+        <div class="user-mini-info"><h4>K Praveen Kumar</h4><p>Veera K</p></div>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-left">
+          <div class="page-title-box">
+            <h1>Account Settings ⚙️</h1>
+            <p>Update your Firebase security and access administrative controls</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="timer-pill" title="Auto Logout Countdown">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Session: <strong id="sessionTimerDisplay">30:00</strong></span>
+          </div>
+          <div class="avatar-header" id="logoutTrigger" title="Logout">
+            <img src="images/veera.png" alt="Avatar" onerror="this.src='https://ui-avatars.com/api/?name=Veera+K&background=8b5cf6&color=fff';" />
+          </div>
+        </div>
+      </header>
+
+      <div class="settings-center-container">
+
+        <!-- 1. Password Change Card -->
+        <div class="setting-card">
+          <div class="card-head">
+            <span class="icon-wrap purple"><i class="fa-solid fa-lock"></i></span>
+            <div>
+              <h3>Change Password</h3>
+              <p>Directly update your password in Firebase Authentication</p>
+            </div>
+          </div>
+
+          <form id="passwordUpdateForm" class="setting-form">
+            <div class="form-group">
+              <label>Current Password *</label>
+              <input type="password" id="setCurrentPass" placeholder="Enter your current password" required />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>New Password *</label>
+                <input type="password" id="setNewPass" placeholder="Enter new strong password" required />
+              </div>
+              <div class="form-group">
+                <label>Confirm New Password *</label>
+                <input type="password" id="setConfirmPass" placeholder="Re-enter new password" required />
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary-set" id="btnUpdatePassword">
+              <i class="fa-solid fa-key"></i> <span>Update Password in Firebase</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. Admin Login Card (Opens Pattern Modal) -->
+        <div class="admin-portal-card">
+          <div class="admin-portal-info">
+            <div class="portal-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div>
+              <h3>Administrative Controls</h3>
+              <p>Access the backend project manager to add, edit descriptions, and delete project data.</p>
+            </div>
+          </div>
+          <button type="button" class="btn-big-admin-login" id="openPatternModalBtn">
+            <i class="fa-solid fa-crown"></i> <span>UNLOCK ADMIN PORTAL</span> <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ================= PATTERN LOCK MODAL ================= -->
+  <div class="pattern-modal-overlay" id="patternModal">
+    <div class="pattern-modal-box">
+      <button type="button" class="modal-close-icon" id="closePatternModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="modal-shield-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3>Draw Admin Pattern</h3>
+      <p class="modal-sub">Draw your secret gesture to access <strong>admin.html</strong></p>
+
+      <div class="canvas-wrap">
+        <canvas id="patternCanvas" width="280" height="280"></canvas>
+      </div>
+
+      <div class="pattern-status" id="patternStatusMsg">Connect dots to unlock</div>
+
+      <button type="button" class="btn-reset-gesture" id="resetPatternBtn">
+        <i class="fa-solid fa-rotate-right"></i> Clear Pattern
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="settings.js"></script>
+</body>
+</html>
