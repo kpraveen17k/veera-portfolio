@@ -2,12 +2,11 @@
   --bg-deep: #0b0f19;
   --panel-dark: linear-gradient(160deg, #131b2e 0%, #0d121f 100%);
   --accent-cyan: #06b6d4;
-  --accent-purple: #9333ea;
+  --accent-purple: #8b5cf6;
   --accent-pink: #ec4899;
   --btn-primary: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #db2777 100%);
   --btn-hover: linear-gradient(135deg, #6d28d9 0%, #a21caf 50%, #be185d 100%);
   --glow-accent: rgba(147, 51, 234, 0.35);
-
   --card-light: #ffffff;
   --text-main: #0f172a;
   --text-muted: #64748b;
@@ -35,8 +34,8 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient Glow */
-.aurora-glow {
+/* Ambient Glow Spheres */
+.glow-sphere {
   position: absolute;
   width: 500px;
   height: 500px;
@@ -46,10 +45,10 @@ body {
   opacity: 0.35;
   z-index: 0;
 }
-.glow-top-left { top: -120px; left: -120px; background: #6366f1; }
-.glow-bottom-right { bottom: -120px; right: -120px; background: #db2777; }
+.glow-1 { top: -120px; left: -120px; background: #6366f1; }
+.glow-2 { bottom: -120px; right: -120px; background: #db2777; }
 
-.portal-wrapper {
+.page-wrapper {
   width: 100%;
   max-width: 1040px;
   position: relative;
@@ -58,39 +57,27 @@ body {
   justify-content: center;
 }
 
-/* ================= 1. PC VIEW (2-PAGE BOOK OPEN) ================= */
+/* ================= PC 3D BOOK OPEN ================= */
 @media (min-width: 851px) {
   body {
     perspective: 2000px;
   }
 
-  .portal-wrapper {
+  .page-wrapper {
     perspective: 2000px;
   }
 
   @keyframes openLeftPage {
-    0% {
-      opacity: 0;
-      transform: rotateY(-85deg);
-    }
-    100% {
-      opacity: 1;
-      transform: rotateY(0deg);
-    }
+    0% { opacity: 0; transform: rotateY(-85deg); }
+    100% { opacity: 1; transform: rotateY(0deg); }
   }
 
   @keyframes openRightPage {
-    0% {
-      opacity: 0;
-      transform: rotateY(85deg);
-    }
-    100% {
-      opacity: 1;
-      transform: rotateY(0deg);
-    }
+    0% { opacity: 0; transform: rotateY(85deg); }
+    100% { opacity: 1; transform: rotateY(0deg); }
   }
 
-  .book-container {
+  .card-container {
     position: relative;
     width: 100%;
     min-height: 590px;
@@ -100,17 +87,7 @@ body {
     overflow: visible;
   }
 
-  .book-spine {
-    position: absolute;
-    left: 44%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.4), rgba(255,255,255,0.05));
-    z-index: 25;
-  }
-
-  .page-left {
+  .banner-panel {
     width: 44%;
     background: var(--panel-dark);
     border-radius: 28px 0 0 28px;
@@ -122,9 +99,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
   }
 
-  .page-right {
+  .forms-panel {
     width: 56%;
     background: var(--card-light);
     border-radius: 0 28px 28px 0;
@@ -138,7 +116,7 @@ body {
     justify-content: center;
   }
 
-  .switcher-bubble {
+  .switch-bubble {
     position: absolute;
     right: -24px;
     top: 50%;
@@ -157,29 +135,32 @@ body {
     transition: var(--transition);
     z-index: 999;
   }
-
-  .field-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
 }
 
-/* ================= COMMON CONTENT STYLES ================= */
-.banner-inner {
+/* ================= BANNER CONTENT ================= */
+.banner-content {
   max-width: 320px;
   margin: 0 auto;
   text-align: center;
 }
 
-.hero-logo-frame {
-  width: 100%;
-  max-width: 180px;
-  margin: 0 auto 12px;
-  filter: drop-shadow(0 10px 20px var(--glow-accent));
+.brand-logo-container {
+  position: relative;
+  width: 170px;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 12px 25px rgba(168, 85, 247, 0.45));
+  transition: var(--transition);
 }
 
-.hero-logo-graphic {
+.brand-logo-container:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.veera-vector-logo {
   width: 100%;
   height: auto;
   object-fit: contain;
@@ -193,26 +174,26 @@ body {
   letter-spacing: 2px;
   color: var(--accent-cyan);
   background: rgba(6, 182, 212, 0.12);
-  border: 1px solid rgba(6, 182, 212, 0.25);
-  padding: 6px 16px;
+  border: 1px solid rgba(6, 182, 212, 0.28);
+  padding: 6px 18px;
   border-radius: 20px;
   margin-bottom: 14px;
 }
 
-.banner-brief {
+.brand-description {
   font-size: 12.5px;
   line-height: 1.65;
   color: #94a3b8;
   margin-bottom: 22px;
 }
 
-.metric-capsules {
+.stat-badges {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
 
-.capsule {
+.badge-item {
   font-size: 11px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.06);
@@ -224,9 +205,10 @@ body {
   gap: 6px;
   color: #e2e8f0;
 }
-.capsule i { color: var(--accent-cyan); }
+.badge-item i { color: var(--accent-cyan); }
 
-.segmented-tabs {
+/* ================= FORMS PANEL ================= */
+.tabs-nav {
   position: relative;
   display: flex;
   background: #f1f5f9;
@@ -236,7 +218,7 @@ body {
   margin: 0 auto 20px;
 }
 
-.tab-btn {
+.tab-item {
   position: relative;
   z-index: 2;
   border: none;
@@ -248,53 +230,53 @@ body {
   cursor: pointer;
   transition: color 0.3s ease;
 }
-.tab-btn.active { color: #ffffff; }
+.tab-item.active { color: #ffffff; }
 
-.active-tab-slider {
+.sliding-indicator {
   position: absolute;
   top: 4px;
   left: 4px;
   height: calc(100% - 8px);
-  width: 88px;
+  width: 90px;
   background: linear-gradient(135deg, #1e293b, #0f172a);
   border-radius: 25px;
   transition: var(--transition);
   z-index: 1;
 }
 
-.form-pane {
+.form-view {
   display: none;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.form-pane.active {
+.form-view.active {
   display: block;
   opacity: 1;
   transform: translateY(0);
 }
 
-.pane-header {
+.view-header {
   text-align: center;
   margin-bottom: 20px;
 }
-.pane-header h2 {
+.view-header h2 {
   font-size: 24px;
   font-weight: 800;
   color: var(--text-main);
 }
-.pane-header p {
+.view-header p {
   font-size: 12.5px;
   color: var(--text-muted);
   margin-top: 4px;
 }
 
-.floating-field {
+.input-box {
   position: relative;
   margin-bottom: 14px;
 }
 
-.floating-field input {
+.input-box input {
   width: 100%;
   padding: 13px 40px 13px 44px;
   border-radius: 12px;
@@ -306,7 +288,7 @@ body {
   transition: var(--transition);
 }
 
-.floating-field label {
+.input-box label {
   position: absolute;
   left: 44px;
   top: 50%;
@@ -317,7 +299,7 @@ body {
   transition: var(--transition);
 }
 
-.field-leading-icon {
+.field-icon {
   position: absolute;
   left: 16px;
   top: 50%;
@@ -326,7 +308,7 @@ body {
   font-size: 14px;
 }
 
-.pass-eye-btn {
+.view-pass-btn {
   position: absolute;
   right: 14px;
   top: 50%;
@@ -338,15 +320,15 @@ body {
   font-size: 14px;
 }
 
-.floating-field input:focus,
-.floating-field input:not(:placeholder-shown) {
+.input-box input:focus,
+.input-box input:not(:placeholder-shown) {
   border-color: #8b5cf6 !important;
   background: #ffffff;
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16) !important;
 }
 
-.floating-field input:focus + label,
-.floating-field input:not(:placeholder-shown) + label {
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label {
   top: 0;
   left: 12px;
   font-size: 10.5px;
@@ -357,11 +339,11 @@ body {
   border-radius: 4px;
 }
 
-.floating-field input:focus ~ .field-leading-icon {
+.input-box input:focus ~ .field-icon {
   color: #8b5cf6;
 }
 
-.pane-options {
+.form-options {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -369,16 +351,16 @@ body {
   font-size: 12px;
 }
 
-.custom-checkbox-wrap {
+.check-container {
   display: flex;
   align-items: center;
   gap: 7px;
   cursor: pointer;
   color: var(--text-muted);
 }
-.custom-checkbox-wrap input { display: none; }
+.check-container input { display: none; }
 
-.checkbox-box {
+.custom-box {
   width: 17px;
   height: 17px;
   border-radius: 5px;
@@ -388,11 +370,11 @@ body {
   place-items: center;
 }
 
-.custom-checkbox-wrap input:checked + .checkbox-box {
+.check-container input:checked + .custom-box {
   background: #8b5cf6;
   border-color: #8b5cf6;
 }
-.custom-checkbox-wrap input:checked + .checkbox-box::after {
+.check-container input:checked + .custom-box::after {
   content: '\f00c';
   font-family: 'Font Awesome 6 Free';
   font-weight: 900;
@@ -400,14 +382,14 @@ body {
   color: #fff;
 }
 
-.accent-link {
+.inline-link {
   color: #8b5cf6;
   text-decoration: none;
   font-weight: 700;
 }
-.accent-link:hover { text-decoration: underline; }
+.inline-link:hover { text-decoration: underline; }
 
-.submit-action-btn {
+.action-btn {
   width: 100%;
   padding: 13.5px;
   border: none;
@@ -424,31 +406,58 @@ body {
   box-shadow: 0 10px 24px var(--glow-accent);
   transition: var(--transition);
 }
+.action-btn:hover {
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(147, 51, 234, 0.45);
+}
 
-.pane-footer-text {
+.footer-switch {
   text-align: center;
   font-size: 12.5px;
   color: var(--text-muted);
   margin-top: 16px;
 }
 
-.action-link {
+.link-bold {
   color: #8b5cf6;
   font-weight: 700;
   cursor: pointer;
 }
-.action-link:hover { text-decoration: underline; }
+.link-bold:hover { text-decoration: underline; }
 
-/* ================= 2. MOBILE VIEW (100% SCREENSHOT MATCH) ================= */
+.dismiss-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 30;
+  transition: var(--transition);
+}
+.dismiss-btn:hover {
+  background: #e2e8f0;
+  color: var(--text-main);
+  transform: rotate(90deg);
+}
+
+.fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ================= MOBILE VIEW (ANIMATED FALL-DOWN) ================= */
 @keyframes mobileSmoothDrop {
-  0% {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 850px) {
@@ -458,14 +467,14 @@ body {
     perspective: none !important;
   }
 
-  .portal-wrapper {
+  .page-wrapper {
     max-width: 390px;
     width: 100%;
     perspective: none !important;
     transform: none !important;
   }
 
-  .book-container {
+  .card-container {
     position: relative;
     width: 100%;
     display: flex;
@@ -479,12 +488,7 @@ body {
     animation: mobileSmoothDrop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .book-spine {
-    display: none !important;
-  }
-
-  /* TOP DARK BANNER (LOGO ONLY) */
-  .page-left {
+  .banner-panel {
     width: 100%;
     background: #0f1629;
     padding: 30px 20px 24px;
@@ -496,35 +500,11 @@ body {
     box-shadow: none !important;
   }
 
-  .hero-logo-frame {
-    max-width: 140px;
-    margin: 0;
-  }
-
-  .tagline-pill, .banner-brief, .metric-capsules {
+  .brand-description, .stat-badges, .tagline-pill {
     display: none !important;
   }
 
-  /* Top Right Close 'X' Button */
-  .portal-close-btn {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #1e293b;
-    border: none;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    z-index: 50;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  }
-
-  /* Seam Floating Switcher Bubble */
-  .switcher-bubble {
+  .switch-bubble {
     position: absolute;
     top: auto;
     bottom: -20px;
@@ -542,8 +522,7 @@ body {
     z-index: 60;
   }
 
-  /* BOTTOM FORM SECTION */
-  .page-right {
+  .forms-panel {
     width: 100%;
     background: #ffffff;
     padding: 26px 20px 24px;
@@ -551,35 +530,35 @@ body {
     box-shadow: none !important;
   }
 
-  .segmented-tabs {
+  .tabs-nav {
     margin: 0 auto 16px;
   }
 
-  .pane-header {
+  .view-header {
     margin-bottom: 16px;
   }
-  .pane-header h2 {
+  .view-header h2 {
     font-size: 22px;
   }
-  .pane-header p {
+  .view-header p {
     font-size: 11.5px;
   }
 
-  .floating-field {
+  .input-box {
     margin-bottom: 12px;
   }
-  .floating-field input {
+  .input-box input {
     padding: 12px 38px 12px 42px;
     font-size: 13.5px;
   }
 
-  .field-grid {
+  .fields-row {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  .submit-action-btn {
+  .action-btn {
     padding: 13px;
     font-size: 14px;
     border-radius: 12px;
