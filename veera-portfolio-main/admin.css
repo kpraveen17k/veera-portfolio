@@ -1,0 +1,459 @@
+:root {
+  --primary-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-blue: #0284c7;
+  --card-bg: #ffffff;
+  --page-bg: #f8fafc;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body.admin-body {
+  background: var(--page-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* Passcode Security Gate UI */
+.passcode-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+}
+
+.passcode-overlay.hidden {
+  display: none !important;
+}
+
+.passcode-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 35px 28px;
+  width: 100%;
+  max-width: 390px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.93); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.passcode-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 24px;
+  box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.5);
+}
+
+.passcode-card h2 {
+  color: #f8fafc;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.passcode-card p {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.passcode-input-wrap {
+  margin-bottom: 14px;
+}
+
+.passcode-input-wrap input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid #334155;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.passcode-input-wrap input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+}
+
+.passcode-input-wrap input::placeholder {
+  letter-spacing: 1px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.btn-passcode-unlock {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-passcode-unlock:hover {
+  opacity: 0.95;
+}
+
+.btn-passcode-unlock:active {
+  transform: scale(0.98);
+}
+
+.passcode-error-msg {
+  color: #f87171;
+  font-size: 12px;
+  margin-top: 10px;
+  display: none;
+  font-weight: 600;
+}
+
+/* Layout */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 250px;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  flex-shrink: 0;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.admin-brand .emblem {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.admin-brand h2 { 
+  font-size: 17px; 
+  font-weight: 800; 
+  letter-spacing: 1px; 
+}
+
+.admin-brand span { 
+  font-size: 10px; 
+  color: #0284c7; 
+  font-weight: 600; 
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.adm-tab {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.adm-tab:hover { 
+  background: #f1f5f9; 
+  color: var(--text-dark); 
+}
+
+.adm-tab.active {
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+}
+
+.sidebar-foot {
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-dash-return {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-dash-return:hover { 
+  color: var(--primary-purple); 
+}
+
+/* Main Content Area */
+.admin-content {
+  flex: 1;
+  padding: 20px 26px;
+  overflow-y: auto;
+}
+
+.admin-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-left-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.admin-top h1 { 
+  font-size: 20px; 
+  font-weight: 800; 
+}
+
+.admin-top p { 
+  font-size: 12px; 
+  color: var(--text-muted); 
+  margin-top: 2px; 
+}
+
+.top-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-add-primary {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+}
+
+.btn-logout-top {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+/* Data Table */
+.table-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.adm-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.adm-data-table th {
+  background: #f8fafc;
+  padding: 10px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.adm-data-table td {
+  padding: 10px 14px;
+  font-size: 12.5px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.badge-tag {
+  background: #ede9fe;
+  color: var(--primary-purple);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  font-size: 11.5px;
+  margin-right: 4px;
+}
+.btn-icon.edit { background: #ede9fe; color: #8b5cf6; }
+.btn-icon.del { background: #fee2e2; color: #ef4444; }
+
+/* Dynamic Universal Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  place-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+.modal-overlay.active { display: grid; }
+
+.modal-box {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 18px 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-body-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-field label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.form-field input, .form-field textarea, .form-field select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  font-size: 12px;
+  outline: none;
+}
+
+.form-field input:focus, .form-field textarea:focus {
+  border-color: var(--primary-purple);
+}
+
+.btn-save-modal {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+@media (max-width: 850px) {
+  .admin-sidebar { display: none; }
+  .admin-content { padding: 14px; }
+  .mobile-toggle-btn { display: inline-block; }
+}
