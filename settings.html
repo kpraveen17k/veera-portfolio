@@ -30,19 +30,8 @@
         <div><h2 class="brand-name">VEERA</h2><span class="brand-sub">Master Your Life</span></div>
       </div>
 
-      <nav class="sidebar-nav">
-        <a href="veeradashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
-        <a href="profile.html" class="nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
-        <a href="projects.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Projects</span></a>
-        <a href="skills.html" class="nav-item"><i class="fa-solid fa-code"></i><span>Skills</span></a>
-        <a href="experience.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
-        <a href="education.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
-        <a href="certificates.html" class="nav-item"><i class="fa-solid fa-certificate"></i><span>Certificates</span></a>
-        <a href="blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Blog</span></a>
-        <a href="gallery.html" class="nav-item"><i class="fa-regular fa-image"></i><span>Gallery</span></a>
-        <a href="messages.html" class="nav-item"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
-        <a href="settings.html" class="nav-item active"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-      </nav>
+      <div id="sidebar-container"></div>
+      <script src="sidebar.js"></script>
 
       <div class="sidebar-user-card" id="sidebarUserCard">
         <div class="user-avatar-mini">
@@ -108,7 +97,7 @@
           </form>
         </div>
 
-        <!-- 2. Admin Login Card (Opens Pattern Modal) -->
+        <!-- 2. Admin Gateway Card (Direct Access) -->
         <div class="admin-portal-card">
           <div class="admin-portal-info">
             <div class="portal-icon"><i class="fa-solid fa-user-shield"></i></div>
@@ -117,37 +106,14 @@
               <p>Access the backend project manager to add, edit descriptions, and delete project data.</p>
             </div>
           </div>
-          <button type="button" class="btn-big-admin-login" id="openPatternModalBtn">
-            <i class="fa-solid fa-crown"></i> <span>UNLOCK ADMIN PORTAL</span> <i class="fa-solid fa-arrow-right"></i>
+          <button type="button" class="btn-big-admin-login" id="openAdminBtn">
+            <i class="fa-solid fa-crown"></i> <span>OPEN ADMIN PORTAL</span> <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
 
       </div>
     </main>
 
-  </div>
-
-  <!-- ================= PATTERN LOCK MODAL ================= -->
-  <div class="pattern-modal-overlay" id="patternModal">
-    <div class="pattern-modal-box">
-      <button type="button" class="modal-close-icon" id="closePatternModalBtn"><i class="fa-solid fa-xmark"></i></button>
-      
-      <div class="modal-shield-icon">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
-      <h3>Draw Admin Pattern</h3>
-      <p class="modal-sub">Draw your secret gesture to access <strong>admin.html</strong></p>
-
-      <div class="canvas-wrap">
-        <canvas id="patternCanvas" width="280" height="280"></canvas>
-      </div>
-
-      <div class="pattern-status" id="patternStatusMsg">Connect dots to unlock</div>
-
-      <button type="button" class="btn-reset-gesture" id="resetPatternBtn">
-        <i class="fa-solid fa-rotate-right"></i> Clear Pattern
-      </button>
-    </div>
   </div>
 
   <script type="module" src="settings.js"></script>

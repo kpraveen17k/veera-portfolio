@@ -13,8 +13,8 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
-// Fast Canvas Image Compressor
-function compressImageFast(file) {
+// Image Compressor to Base64 (Storage bucket tho issue lekunda direct save avtundi)
+function compressImage(file) {
   return new Promise((resolve) => {
     if (!file) return resolve("");
     const reader = new FileReader();
@@ -38,7 +38,7 @@ function compressImageFast(file) {
         canvas.height = height;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL("image/jpeg", 0.75));
+        resolve(canvas.toDataURL("image/jpeg", 0.7));
       };
       img.onerror = () => resolve(e.target.result);
       img.src = e.target.result;
@@ -48,14 +48,36 @@ function compressImageFast(file) {
   });
 }
 
-async function uploadMultiFiles(files) {
+async function getImagesBase64(files) {
   if (!files || files.length === 0) return [];
-  const compressPromises = Array.from(files).map(f => compressImageFast(f));
-  const urls = await Promise.all(compressPromises);
-  return urls.filter(u => u !== "");
+  const promises = Array.from(files).map(f => compressImage(f));
+  const results = await Promise.all(promises);
+  return results.filter(u => u !== "");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const PASS_KEY = "P1-A7-V2-S0";
+  const passcodeGate = document.getElementById("passcodeGate");
+  const passcodeForm = document.getElementById("passcodeForm");
+  const passkeyField = document.getElementById("passkeyField");
+  const passError = document.getElementById("passError");
+
+  if (passkeyField) passkeyField.focus();
+
+  if (passcodeForm) {
+    passcodeForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (passkeyField.value.trim() === PASS_KEY) {
+        passcodeGate.classList.add("hidden");
+        passError.style.display = "none";
+        renderTable();
+      } else {
+        passError.style.display = "block";
+        passkeyField.value = "";
+      }
+    });
+  }
+
   let activeSection = "projects";
   let currentItems = [];
 
@@ -72,28 +94,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const editItemId = document.getElementById("editItemIndex");
   const submitBtn = document.querySelector(".btn-save-modal") || document.getElementById("submitFormBtn");
 
-  // Universal Configs for All 9 Sidebar Options
   const configs = {
     projects: {
       title: "Projects Manager",
       desc: "Upload projects with multiple screenshots & full descriptions.",
       collection: "projects",
-      localKey: "veera_custom_projects",
       columns: ["Previews", "Title", "Category", "Description", "Tech Stack", "Actions"],
       fields: [
         { id: "title", label: "Project Title", type: "text", required: true },
         { id: "category", label: "Category", type: "select", options: ["completed", "in-progress"], required: true },
         { id: "desc", label: "Full Detailed Information", type: "textarea", required: true },
-        { id: "tech", label: "Tech Stack (Comma Separated)", type: "text", required: true },
+        { id: "tech", label: "Tech Stack (Comma Separated)", type: "text", required: false },
         { id: "link", label: "Project Link / GitHub URL", type: "url", required: false },
-        { id: "images", label: "Upload Images (Select Multiple)", type: "file", multiple: true, required: false }
+        { id: "images", label: "Upload Images (Multiple)", type: "file", multiple: true, required: false }
       ]
     },
     skills: {
       title: "Skills Manager",
       desc: "Manage skills and technical proficiency.",
       collection: "skills",
-      localKey: "veera_custom_skills",
       columns: ["Banner", "Skill Title", "Percentage", "Summary", "Actions"],
       fields: [
         { id: "title", label: "Skill / Category Title", type: "text", required: true },
@@ -106,12 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Experience Manager",
       desc: "Manage employment history and roles.",
       collection: "experience",
-      localKey: "veera_custom_experience",
       columns: ["Banner", "Role / Title", "Company", "Duration", "Summary", "Actions"],
       fields: [
         { id: "title", label: "Job Role / Title", type: "text", required: true },
         { id: "company", label: "Company / Organization", type: "text", required: true },
-        { id: "duration", label: "Duration (e.g. 2024 - Present)", type: "text", required: true },
+        { id: "duration", label: "Duration", type: "text", required: true },
         { id: "desc", label: "Key Highlights", type: "textarea", required: true },
         { id: "images", label: "Company Logo", type: "file", multiple: false, required: false }
       ]
@@ -120,12 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Education Manager",
       desc: "Manage academic records.",
       collection: "education",
-      localKey: "veera_custom_education",
       columns: ["Banner", "Degree", "Institution", "Year", "Actions"],
       fields: [
         { id: "title", label: "Degree / Course Name", type: "text", required: true },
         { id: "institution", label: "College / University", type: "text", required: true },
-        { id: "year", label: "Passing Year / Score", type: "text", required: true },
+        { id: "year", label: "Passing Year", type: "text", required: true },
         { id: "desc", label: "Summary", type: "textarea", required: true },
         { id: "images", label: "Campus Banner", type: "file", multiple: false, required: false }
       ]
@@ -134,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Certificates Manager",
       desc: "Manage credentials and certifications.",
       collection: "certificates",
-      localKey: "veera_custom_certificates",
       columns: ["Certificate", "Title", "Issuer", "Issue Date", "Actions"],
       fields: [
         { id: "title", label: "Certificate Name", type: "text", required: true },
@@ -148,33 +164,30 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Blog Manager",
       desc: "Manage articles and publications.",
       collection: "blog",
-      localKey: "veera_custom_blog",
       columns: ["Banner", "Article Title", "Author / Date", "Summary", "Actions"],
       fields: [
         { id: "title", label: "Article Title", type: "text", required: true },
-        { id: "author", label: "Author / Date Tag", type: "text", required: true },
+        { id: "author", label: "Author / Date", type: "text", required: true },
         { id: "desc", label: "Article Content", type: "textarea", required: true },
-        { id: "images", label: "Featured Article Banner", type: "file", multiple: false, required: false }
+        { id: "images", label: "Banner", type: "file", multiple: false, required: false }
       ]
     },
     gallery: {
       title: "Gallery Manager",
       desc: "Manage photo showcase gallery.",
       collection: "gallery",
-      localKey: "veera_custom_gallery",
       columns: ["Image", "Caption", "Category", "Actions"],
       fields: [
-        { id: "title", label: "Image Caption", type: "text", required: true },
-        { id: "category", label: "Category Tag", type: "text", required: true },
-        { id: "images", label: "Upload Photos (Multiple)", type: "file", multiple: true, required: false }
+        { id: "title", label: "Caption", type: "text", required: true },
+        { id: "category", label: "Category", type: "text", required: true },
+        { id: "images", label: "Upload Photos", type: "file", multiple: true, required: false }
       ]
     },
     messages: {
       title: "Messages Manager",
-      desc: "View contact form inquiries.",
+      desc: "View contact inquiries.",
       collection: "messages",
-      localKey: "veera_custom_messages",
-      columns: ["Avatar", "Sender Name", "Email / Phone", "Message", "Actions"],
+      columns: ["Sender Name", "Email / Phone", "Message", "Actions"],
       fields: [
         { id: "title", label: "Sender Name", type: "text", required: true },
         { id: "email", label: "Email / Phone", type: "text", required: true },
@@ -185,18 +198,16 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Settings Manager",
       desc: "Configure system profile info.",
       collection: "settings",
-      localKey: "veera_custom_settings",
-      columns: ["Avatar", "Profile Name", "Email", "Tagline", "Actions"],
+      columns: ["Profile Name", "Email", "Tagline", "Actions"],
       fields: [
         { id: "title", label: "Full Name", type: "text", required: true },
         { id: "email", label: "Contact Email", type: "email", required: true },
-        { id: "desc", label: "Bio / Tagline", type: "textarea", required: true },
+        { id: "desc", label: "Bio", type: "textarea", required: true },
         { id: "images", label: "Profile Avatar", type: "file", multiple: false, required: false }
       ]
     }
   };
 
-  // Switch Tabs
   sectionTabs.forEach(tab => {
     tab.addEventListener("click", () => {
       sectionTabs.forEach(t => t.classList.remove("active"));
@@ -215,15 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
     tableBody.innerHTML = `<tr><td colspan="${config.columns.length}" style="text-align:center; padding: 20px; color: #94a3b8;"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>`;
 
     try {
-      const snapshot = await db.collection(config.collection).get();
+      const snap = await db.collection(config.collection).get();
       currentItems = [];
-      snapshot.forEach(docSnap => currentItems.push({ id: docSnap.id, ...docSnap.data() }));
-
-      if (currentItems.length === 0) {
-        currentItems = JSON.parse(localStorage.getItem(config.localKey) || "[]");
-      }
-    } catch {
-      currentItems = JSON.parse(localStorage.getItem(config.localKey) || "[]");
+      snap.forEach(docSnap => currentItems.push({ id: docSnap.id, ...docSnap.data() }));
+    } catch (err) {
+      console.error(err);
     }
 
     tableBody.innerHTML = "";
@@ -238,11 +245,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const imgList = item.images || (item.imageUrl ? [item.imageUrl] : ["images/veera.png"]);
       const previewThumbs = imgList.slice(0, 3).map(src => `<img src="${src}" style="width:30px; height:30px; border-radius:6px; object-fit:cover; margin-right:3px;" onerror="this.src='images/veera.png';" />`).join("");
 
-      let rowContent = `<td><div style="display:flex; align-items:center;">${previewThumbs} ${imgList.length > 3 ? `<span style="font-weight:700; color:#8b5cf6;">+${imgList.length - 3}</span>` : ''}</div></td>`;
+      let rowContent = `<td><div style="display:flex; align-items:center;">${previewThumbs}</div></td>`;
       rowContent += `<td><strong>${item.title || "-"}</strong></td>`;
 
-      if (item.category || item.company || item.percentage || item.institution || item.issuer || item.author || item.email) {
-        rowContent += `<td><span class="badge-tag">${item.category || item.company || item.percentage || item.institution || item.issuer || item.author || item.email}</span></td>`;
+      if (item.category || item.company || item.percentage || item.institution || item.issuer || item.author) {
+        rowContent += `<td><span class="badge-tag">${item.category || item.company || item.percentage || item.institution || item.issuer || item.author}</span></td>`;
       }
       if (item.duration || item.year || item.date) {
         rowContent += `<td>${item.duration || item.year || item.date}</td>`;
@@ -317,28 +324,26 @@ document.addEventListener("DOMContentLoaded", () => {
       const config = configs[activeSection] || configs.projects;
       try {
         await db.collection(config.collection).doc(id).delete();
-      } catch {}
-      const localData = JSON.parse(localStorage.getItem(config.localKey) || "[]").filter(i => i.id !== id);
-      localStorage.setItem(config.localKey, JSON.stringify(localData));
-      renderTable();
+        renderTable();
+      } catch (err) {
+        alert("Delete error: " + err.message);
+      }
     }
   }
 
   crudForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
-    }
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
 
     try {
       const config = configs[activeSection] || configs.projects;
       const docId = editItemId.value;
       const fileInput = document.getElementById("field_images");
-      let newUploadedImages = [];
+      let imagesBase64 = [];
 
       if (fileInput && fileInput.files.length > 0) {
-        newUploadedImages = await uploadMultiFiles(fileInput.files);
+        imagesBase64 = await getImagesBase64(fileInput.files);
       }
 
       const entry = { updatedAt: new Date().toISOString() };
@@ -356,9 +361,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      if (newUploadedImages.length > 0) {
-        entry.images = newUploadedImages;
-        entry.imageUrl = newUploadedImages[0];
+      if (imagesBase64.length > 0) {
+        entry.images = imagesBase64;
+        entry.imageUrl = imagesBase64[0];
       } else if (docId) {
         const existing = currentItems.find(i => i.id === docId);
         if (existing) {
@@ -370,50 +375,24 @@ document.addEventListener("DOMContentLoaded", () => {
         entry.imageUrl = "images/veera.png";
       }
 
-      try {
-        if (docId) {
-          await db.collection(config.collection).doc(docId).set(entry, { merge: true });
-        } else {
-          entry.createdAt = new Date().toISOString();
-          const newDoc = await db.collection(config.collection).add(entry);
-          entry.id = newDoc.id;
-        }
-      } catch {}
-
-      const localData = JSON.parse(localStorage.getItem(config.localKey) || "[]");
       if (docId) {
-        const idx = localData.findIndex(i => i.id === docId);
-        if (idx !== -1) localData[idx] = { ...localData[idx], ...entry };
+        await db.collection(config.collection).doc(docId).set(entry, { merge: true });
       } else {
-        entry.id = entry.id || "item_" + Date.now();
-        localData.unshift(entry);
+        entry.createdAt = new Date().toISOString();
+        await db.collection(config.collection).add(entry);
       }
-      localStorage.setItem(config.localKey, JSON.stringify(localData));
 
       modal.classList.remove("active");
       renderTable();
-      alert("✅ Item successfully saved & published!");
+      alert("✅ Saved successfully!");
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("Save failed: " + err.message);
+      console.error(err);
     } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Save & Publish</span>`;
-      }
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Save & Publish</span>`;
     }
   });
 
   document.getElementById("closeModalBtn").addEventListener("click", () => modal.classList.remove("active"));
-  
-  const logoutBtn = document.getElementById("adminLogoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      if (confirm("Logout from admin portal?")) {
-        sessionStorage.clear();
-        window.location.replace("index.html");
-      }
-    });
-  }
-
-  renderTable();
 });

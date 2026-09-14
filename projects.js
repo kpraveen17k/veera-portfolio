@@ -1,6 +1,22 @@
+// Firebase App Initialization
+const firebaseConfig = {
+  apiKey: "AIzaSyBVHRLbX-QqKkLQ01rvEXNQH5u3Jqxpd_I",
+  authDomain: "veeraofficial-1cfdb.firebaseapp.com",
+  projectId: "veeraofficial-1cfdb",
+  storageBucket: "veeraofficial-1cfdb.firebasestorage.app",
+  messagingSenderId: "279932247616",
+  appId: "1:279932247616:web:4fc7d66982d7190f7349a5",
+  measurementId: "G-4QTR5SWCDZ"
+};
+
+if (typeof firebase !== "undefined" && !firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = (typeof firebase !== "undefined") ? firebase.firestore() : null;
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Session Countdown Timer
-  const expiresAt = parseInt(sessionStorage.getItem("veera_session_expires") || 0, 10);
+  const expiresAt = parseInt(sessionStorage.getItem("veera_session_expires") || (Date.now() + 30 * 60 * 1000), 10);
   const timerDisplay = document.getElementById("sessionTimerDisplay");
 
   function updateTimer() {
@@ -23,37 +39,31 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTimer();
   setInterval(updateTimer, 1000);
 
-  // 2. Fetch & Render User-Added Projects
+  // 2. Fetch & Render Projects from Firebase
   let currentProjectList = [];
   const grid = document.getElementById("projectCardsGrid");
 
   async function renderAllProjects() {
+    if (!grid) return;
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 24px;"></i><br><br>Loading live projects...</div>`;
+
     let cloudProjects = [];
 
-    try {
-      if (typeof firebase !== "undefined" && firebase.apps.length) {
-        const snap = await firebase.firestore().collection("projects").get();
+    if (db) {
+      try {
+        const snap = await db.collection("projects").orderBy("createdAt", "desc").get();
         snap.forEach(d => cloudProjects.push({ id: d.id, ...d.data() }));
+      } catch {
+        try {
+          const snap = await db.collection("projects").get();
+          snap.forEach(d => cloudProjects.push({ id: d.id, ...d.data() }));
+        } catch (err) {
+          console.error("Firestore read error:", err);
+        }
       }
-    } catch (e) {
-      console.warn("Firestore fetch:", e);
     }
 
-    let customProjects = [];
-    try {
-      customProjects = JSON.parse(localStorage.getItem("veera_custom_projects") || localStorage.getItem("veera_projects_data") || "[]");
-    } catch {
-      customProjects = [];
-    }
-
-    const uniqueIds = new Set();
-    currentProjectList = [...cloudProjects, ...customProjects].filter(p => {
-      if (!p.id || uniqueIds.has(p.id)) return false;
-      uniqueIds.add(p.id);
-      return true;
-    });
-
-    if (!grid) return;
+    currentProjectList = cloudProjects;
     grid.innerHTML = "";
 
     if (currentProjectList.length === 0) {
@@ -61,10 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: #ffffff; border-radius: 16px; border: 1px dashed #cbd5e1;">
           <i class="fa-solid fa-folder-open" style="font-size: 36px; color: #94a3b8; margin-bottom: 10px;"></i>
           <h3 style="font-size: 15px; font-weight: 800; color: #1e293b;">No Projects Found</h3>
-          <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Upload your first project from the Master Admin Hub.</p>
-          <a href="admin.html" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; background: #8b5cf6; color: #fff; text-decoration: none; padding: 7px 16px; border-radius: 10px; font-size: 12px; font-weight: 700;">
-            <i class="fa-solid fa-plus"></i> Add New Project
-          </a>
+          <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Projects added from the Admin Hub will appear here instantly.</p>
         </div>
       `;
       updateCounters(0, 0, 0);
@@ -131,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inProgEl) inProgEl.innerText = inProgress;
   }
 
-  // 3. Multi-Image Showcase Modal & Fullscreen Lightbox Engine
+  // 3. Multi-Image Showcase Modal
   const modal = document.getElementById("projectInfoModal");
   const mainStage = document.getElementById("modalMainStage");
   const mainActiveImg = document.getElementById("modalActiveMainImage");
@@ -140,9 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let activeSlideIndex = 0;
   let activeModalImages = [];
-  let autoSlideTimer = null;
 
-  // Create Lightbox DOM Dynamically
   let lightboxOverlay = document.getElementById("lightboxOverlay");
   if (!lightboxOverlay) {
     lightboxOverlay = document.createElement("div");
@@ -169,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
     activeSlideIndex = index;
     const targetUrl = activeModalImages[activeSlideIndex] || "images/veera.png";
 
-    // Setup Auto-Blur Background
     let blurBg = mainStage.querySelector(".stage-blurred-bg");
     if (!blurBg) {
       blurBg = document.createElement("img");
@@ -178,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     blurBg.src = targetUrl;
 
-    // Cross-fade Main Image
     mainActiveImg.className = "stage-main-img fade-switching";
     setTimeout(() => {
       mainActiveImg.src = targetUrl;
@@ -188,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mainActiveImg.classList.remove("fade-switching");
     }, 120);
 
-    // Sync Thumbnails Track
     if (thumbsTrack) {
       const thumbs = thumbsTrack.querySelectorAll(".thumb-item");
       thumbs.forEach((t, idx) => {
@@ -202,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Fullscreen Zoom Trigger
   if (mainStage) {
     mainStage.addEventListener("click", (e) => {
       if (e.target.closest(".stage-nav-btn")) return;
@@ -239,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     activeModalImages = (project.images && project.images.length > 0) ? project.images : (project.imageUrl ? [project.imageUrl] : ["images/veera.png"]);
 
-    // Add Zoom Indicator Badge
     let zoomBadge = mainStage.querySelector(".stage-zoom-badge");
     if (!zoomBadge) {
       zoomBadge = document.createElement("span");
@@ -248,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mainStage.appendChild(zoomBadge);
     }
 
-    // Generate Thumbnails
     if (thumbsTrack) {
       thumbsTrack.innerHTML = activeModalImages.map((src, i) => `
         <div class="thumb-item ${i === 0 ? 'active' : ''}" onclick="window.switchThumbSlide(${i})">
@@ -320,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Search Bar Filter
+  // 5. Search Bar
   const searchInput = document.getElementById('projectSearchInput');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -338,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Logout Handlers
+  // 6. Logout
   function handleLogout() {
     if (confirm("Are you sure you want to logout?")) {
       sessionStorage.clear();

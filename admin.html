@@ -10,6 +10,27 @@
 </head>
 <body class="admin-body">
 
+  <!-- Passcode Verification Overlay -->
+  <div class="passcode-overlay" id="passcodeGate">
+    <div class="passcode-card">
+      <div class="passcode-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2>Security Verification</h2>
+      <p>Ee page open cheyadaniki Passcode enter cheyyandi</p>
+      
+      <form id="passcodeForm">
+        <div class="passcode-input-wrap">
+          <input type="password" id="passkeyField" placeholder="Enter Passcode..." autocomplete="off" required />
+        </div>
+        <button type="submit" class="btn-passcode-unlock">
+          <i class="fa-solid fa-lock-open"></i> Unlock Access
+        </button>
+        <div class="passcode-error-msg" id="passError">Thappu Passcode! Malli try cheyyandi.</div>
+      </form>
+    </div>
+  </div>
+
   <div class="admin-layout">
     <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">
@@ -83,10 +104,11 @@
     </div>
   </div>
 
-  <!-- Firebase CDN Scripts -->
+  <!-- Firebase CDN Scripts (Firestore + Storage Compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

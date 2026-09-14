@@ -22,6 +22,130 @@ body.admin-body {
   min-height: 100vh;
 }
 
+/* Passcode Security Gate UI */
+.passcode-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+}
+
+.passcode-overlay.hidden {
+  display: none !important;
+}
+
+.passcode-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 35px 28px;
+  width: 100%;
+  max-width: 390px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.93); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.passcode-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 24px;
+  box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.5);
+}
+
+.passcode-card h2 {
+  color: #f8fafc;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.passcode-card p {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.passcode-input-wrap {
+  margin-bottom: 14px;
+}
+
+.passcode-input-wrap input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid #334155;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.passcode-input-wrap input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+}
+
+.passcode-input-wrap input::placeholder {
+  letter-spacing: 1px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.btn-passcode-unlock {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-passcode-unlock:hover {
+  opacity: 0.95;
+}
+
+.btn-passcode-unlock:active {
+  transform: scale(0.98);
+}
+
+.passcode-error-msg {
+  color: #f87171;
+  font-size: 12px;
+  margin-top: 10px;
+  display: none;
+  font-weight: 600;
+}
+
+/* Layout */
 .admin-layout {
   display: flex;
   min-height: 100vh;
@@ -247,7 +371,7 @@ body.admin-body {
 .btn-icon.edit { background: #ede9fe; color: #8b5cf6; }
 .btn-icon.del { background: #fee2e2; color: #ef4444; }
 
-/* Dynamic Modal */
+/* Dynamic Universal Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
